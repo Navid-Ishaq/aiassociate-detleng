@@ -1,0 +1,1 @@
+export const site = {name:'AI Associate by DeTLeng',origin:'https://www.aiassociate.detleng.com',description:'Understand AI. Explore possibilities. Build useful skills. A free, independent learning journey from curiosity to practical understanding.'};
