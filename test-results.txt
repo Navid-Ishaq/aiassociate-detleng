@@ -1,18 +1,19 @@
-Built 108 pages + 404 in docs/: 8 modules, 24 sections, 96 lessons.
-✔ curriculum has the exact 8 × 3 × 4 structure and predictable IDs (240.6586ms)
-✔ every official title and objective is present on its module and lesson page (0.9155ms)
-✔ all internal links, asset references, and fragment targets resolve in generated files (207.0923ms)
-✔ all 108 direct routes return 200; no-slash lesson URLs redirect to working pages (129.3494ms)
-✔ unknown pages show a useful 404 with HTTP 404 status (5.7019ms)
-✔ every page has metadata, one H1, landmarks, unique IDs, and labelled inactive account dialog (3.295ms)
-✔ ecosystem destinations have secure new-tab attributes and fixed footer order (0.8201ms)
-✔ script has no unresolved build tokens, credential service, analytics, or remote asset dependencies (1.5154ms)
-✔ sitemap, CNAME, and production output agree with the configured hostname (3.3448ms)
-ℹ tests 9
+Built 108 pages + 404 in project root: 8 modules, 24 sections, 96 lessons.
+✔ curriculum has the exact 8 × 3 × 4 structure and predictable IDs (186.1067ms)
+✔ every official title and objective is present on its module and lesson page (1.1484ms)
+✔ all internal links, asset references, and fragment targets resolve in generated files (207.1879ms)
+✔ all 108 direct routes return 200; no-slash lesson URLs redirect to working pages (140.3957ms)
+✔ unknown pages show a useful 404 with HTTP 404 status (5.3416ms)
+✔ every page has metadata, one H1, landmarks, unique IDs, and labelled inactive account dialog (3.2913ms)
+✔ ecosystem destinations have secure new-tab attributes and fixed footer order (0.8261ms)
+✔ script has no unresolved build tokens, credential service, analytics, or remote asset dependencies (1.4916ms)
+✔ sitemap, CNAME, and production output agree with the configured hostname (3.7979ms)
+✔ root publishing preserves source and does not require docs output (9.026ms)
+ℹ tests 10
 ℹ suites 0
-ℹ pass 9
+ℹ pass 10
 ℹ fail 0
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 722.2882
+ℹ duration_ms 684.4809

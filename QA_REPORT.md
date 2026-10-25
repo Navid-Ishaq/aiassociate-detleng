@@ -67,3 +67,14 @@ The implementation also includes a skip link, native labelled radio choices, vis
 - Live hosting, custom-domain DNS/TLS, and GitHub Pages repository settings have not been configured or tested. Publication remains with the owner.
 - Canonical hostname is `www.aiassociate.detleng.com`, as supplied. See README if the intended hostname differs.
 - All 96 lesson activities remain Coming Soon. Real authentication, progress tracking, AI Mentor, live chat, quizzes, flashcards, and full lesson labs are inactive or planned.
+
+## Repository-root publishing migration
+
+The generated website now lives at the project root: `index.html`, `assets/`, `learn/`, `about/`, and `privacy/`. The local preview serves that root. The previous `docs/` output was moved to a local backup outside the project. Source files and Git history were preserved.
+
+- All 119 generated website files matched the previous docs output byte for byte after relocation. Design, interactions, lesson content, and URLs are unchanged.
+- The updated acceptance suite has **10 tests**, including root output, source preservation, and local preview source/Git-path blocking. All 108 direct routes are tested.
+- No browser rendering change was introduced; the earlier visual and interaction review applies to the identical generated assets.
+- Root publishing also exposes committed source/test files as repository content on GitHub Pages. The local preview explicitly blocks source and Git metadata routes. No secrets are included in this project.
+- Publication setting after the owner's push: **main → /(root)**. DNS/TLS remains a separate external configuration issue.
+- No commit, push, Pages-settings edit, or DNS change was performed by the assistant during the migration.

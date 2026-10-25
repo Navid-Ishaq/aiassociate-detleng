@@ -20,7 +20,7 @@ npm test
 npm run preview
 ```
 
-`build` recreates `docs/` from `src/`. `preview` serves the existing build. Use an HTTP server rather than double-clicking HTML files; routes and assets start at the website root.
+`build` writes the generated website directly into the project root from `src/`. `preview` serves the existing build. Use an HTTP server rather than double-clicking HTML files; routes and assets start at the website root.
 
 ## Included
 
@@ -48,20 +48,20 @@ There are 108 content pages plus the 404 page. Lessons, labs, quizzes, flashcard
 | `scripts/build.mjs` | Dependency-free static page generator |
 | `scripts/serve.mjs` | Local HTTP preview with direct routes and real 404 status |
 | `tests/site.test.mjs` | Structural, content, link, and HTTP acceptance tests |
-| `tests/qa/` | Local responsive and contrast fixtures, excluded from `docs/` |
-| `docs/` | Generated, ready-to-host static website |
+| `tests/qa/` | Optional local responsive and contrast fixtures |
+| `index.html`, `assets/`, `learn/`, `about/`, `privacy/` | Generated website at the repository root |
 
-Do not edit generated HTML in `docs/`; edit the source and rebuild. The build safely checks the output path and cleans `docs/` to remove stale pages.
+Edit content and styles in `src/`, then rebuild. Generated root website files are overwritten by the build. The build never recursively deletes the project root, source, or Git history.
 
-## Hosting preparation — owner performs publication
+## Root publishing — owner performs publication
 
-Nothing has been pushed or deployed. The generated website is prepared for GitHub Pages at a custom domain.
+This root-publishing migration is local only. No commit, push, deployment, or DNS change was performed during the migration.
 
-After reviewing and pushing the files yourself, configure Pages to deploy from your chosen branch and the `/docs` folder. Commit the generated `docs/` folder along with the source. No GitHub Actions workflow or hosting account has been created.
+After reviewing and pushing the files yourself, configure Pages to deploy from your chosen branch and **`/(root)`**. Commit the generated root website files along with the source, including deletions of the old `docs/` output. No GitHub Actions workflow or hosting account has been created.
 
 GitHub supports publishing from a branch's root or `/docs` folder: [official publishing-source instructions](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site).
 
-The canonical origin is **https://www.aiassociate.detleng.com**, matching the hostname supplied in the request. `docs/CNAME`, metadata, robots.txt, and sitemap.xml are generated from `src/config.mjs`. If your intended DNS hostname is instead `aiassociate.detleng.com`, change `origin` there and rebuild before publishing. A CNAME file alone does not configure DNS or the repository's custom-domain setting. Those external settings were not changed or verified in this local build.
+The canonical origin is **https://www.aiassociate.detleng.com**, matching the hostname supplied in the request. `CNAME`, metadata, robots.txt, and sitemap.xml are generated from `src/config.mjs`. If your intended DNS hostname is instead `aiassociate.detleng.com`, change `origin` there and rebuild before publishing. A CNAME file alone does not configure DNS or the repository's custom-domain setting. Those external settings were not changed or verified in this local build.
 
 The site expects to run at a domain root. A default repository-subfolder URL would need a base-path adaptation.
 
@@ -85,6 +85,18 @@ $env:SITE_QA='1'
 npm run dev
 ```
 
-Open `/__qa/layouts.html` for 320, 390, 768, and 1024 px test frames, a no-JavaScript frame, and visible overflow/contrast reports. These fixtures are served from `tests/qa/` only with `SITE_QA=1` and are never copied into the production output. Clear the variable afterward with `Remove-Item Env:SITE_QA`.
+Open `/__qa/layouts.html` for 320, 390, 768, and 1024 px test frames, a no-JavaScript frame, and visible overflow/contrast reports. These fixtures are served from `tests/qa/` only with `SITE_QA=1` and are available through that local route only when the flag is set. Repository-root hosting also makes committed source and tests public; keep credentials out of this repository. Clear the variable afterward with `Remove-Item Env:SITE_QA`.
 
 See `QA_REPORT.md` for checks performed and `CONTENT_SOURCES.md` for source mapping.
+
+## Push this migration
+
+After review:
+
+```powershell
+git add -A
+git commit -m "Publish AI Associate website from repository root"
+git push origin main
+```
+
+Then select **Settings → Pages → Deploy from a branch → main → /(root) → Save**. DNS configuration is separate from this migration. The old docs output has been moved out of the project to a local backup.

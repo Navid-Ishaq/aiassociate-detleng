@@ -1,6 +1,6 @@
 import test,{before,after} from 'node:test';
 import assert from 'node:assert/strict';
-import {readFile} from 'node:fs/promises';
+import {readFile,stat} from 'node:fs/promises';
 import path from 'node:path';
 import {build,root,validate} from '../scripts/build.mjs';
 import {createServer} from '../scripts/serve.mjs';
@@ -82,3 +82,11 @@ test('sitemap, CNAME, and production output agree with the configured hostname',
  assert.equal((sitemap.match(/<loc>/g)||[]).length,108);assert.ok(!sitemap.includes('404.html'));
 });
 
+
+test('root publishing preserves source and does not require docs output',async()=>{
+ assert.equal(built.out,root);
+ assert.ok((await readFile(path.join(root,'index.html'),'utf8')).includes('Go beyond'));
+ for(const file of ['src/config.mjs','src/data/curriculum.json','scripts/build.mjs','scripts/serve.mjs','package.json','README.md'])assert.ok((await stat(path.join(root,file))).isFile(),file);
+ await assert.rejects(stat(path.join(root,'docs')),error=>error.code==='ENOENT');
+ for(const url of ['/src/config.mjs','/.git/config','/tests/qa/layouts.html','/assets/..%2f.git/config'])assert.equal((await fetch(base+url)).status,404,url);
+});

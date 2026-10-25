@@ -1,11 +1,11 @@
-import {readFile,writeFile,mkdir,copyFile,rm} from 'node:fs/promises';
+import {readFile,writeFile,mkdir,copyFile} from 'node:fs/promises';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {site} from '../src/config.mjs';
 import {layout,curriculum,modulePage,lessonPage,notFound,modulePath,lessonPath,esc,journey,breadcrumbs} from '../src/templates.mjs';
 import {home,about,privacy} from '../src/pages.mjs';
 export const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const out = path.join(root, 'docs');
+const out = root;
 export const readJSON = async filename => JSON.parse((await readFile(filename,'utf8')).replace(/^\uFEFF/,''));
 export function validate(modules){
  if(modules.length!==8) throw new Error('Expected 8 modules');
@@ -27,9 +27,8 @@ export function validate(modules){
 export async function build(){
  const modules=await readJSON(path.join(root,'src/data/curriculum.json'));
  validate(modules);
- // docs/ is generated output. Check the resolved path before cleaning it.
- if(path.dirname(out)!==root||path.basename(out)!=='docs')throw new Error('Unsafe output directory');
- await rm(out,{recursive:true,force:true});
+ // Root publishing: overwrite only generated files. Never recursively clean the project root.
+ if(out!==root)throw new Error('Unexpected output directory');
  await mkdir(path.join(out,'assets'),{recursive:true});
  const routes=[];
  async function page(route, options){
@@ -67,7 +66,7 @@ export async function build(){
  await writeFile(path.join(out,'robots.txt'),`User-agent: *\nAllow: /\nSitemap: ${site.origin}/sitemap.xml\n`);
  await writeFile(path.join(out,'sitemap.xml'),`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${routes.map(r=>`<url><loc>${site.origin}${r}</loc></url>`).join('')}</urlset>`);
  await writeFile(path.join(out,'route-manifest.json'),JSON.stringify({pages:routes.length,routes},null,2));
- console.log(`Built ${routes.length} pages + 404 in docs/: 8 modules, 24 sections, 96 lessons.`);
+ console.log(`Built ${routes.length} pages + 404 in project root: 8 modules, 24 sections, 96 lessons.`);
  return {modules,routes,out};
 }
 if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url))await build();
