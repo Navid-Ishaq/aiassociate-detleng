@@ -119,3 +119,13 @@ No Q&A banks or detailed lessons have been generated or published. No commit, pu
 - Automated suite: 21/21 passed, covering all 213 content routes, links/fragments, metadata, retained account modal and ecosystem, Quick Review independence, published lesson content, malformed assessment rejection, source answer keys, safe JSON embedding, Unicode and local assets.
 - Source: `src/lessons/M01-L01/lesson.json`, `questions.json`. Shared components: `src/lesson-system/`. See `LESSON_AUTHORING_GUIDE.md` for the next lesson. Some specialised source-to-component mappings are explicit; a new activity type requires an engine extension and verification.
 - No commit, push, deployment, DNS change or live authentication was performed.
+
+## MCQ feedback update acceptance
+
+- Wrong selections now show a light red bar/background and cross, plus the selected distractor's explanation. The correct choice is not highlighted or revealed in this feedback.
+- Retry this question clears only the current question. Browser checks confirmed Question 2 remained Question 2 after repeated retries, with Question 1's earned progress preserved.
+- Correct selections show a green bar/background and tick. Feedback includes the correct explanation and all three distractor explanations. Next question and See results appear only after a correct answer.
+- Browser validation covered empty selection, repeated incorrect answers, retry reset, correct highlights, progress counted once, keyboard retry, mobile 390px without overflow, full 15-question completion, and retry inside the mistakes-only run.
+- End-to-end run: 15/15 correct after practice, with four questions retained in incorrect-attempt history. No browser console errors were observed.
+- Existing 21 automated checks passed after the update. The shared engine and generated root assets are updated; no content bank, curriculum availability, authentication or simulation behaviour changed.
+- No commit or push was performed.

@@ -40,3 +40,7 @@ Generated root files must be included with the source when the owner publishes. 
 ## What to give another assistant
 
 Give it the latest complete project ZIP (excluding `.git` and dependencies), the new lesson DOCX, and this guide. Ask it to follow the working M01-L01 example, preserve the curriculum, integrate locally, and test before marking a lesson available. The authoring kit is a reference subset; it does not replace the latest project when integration is required.
+
+## MCQ retry and feedback
+
+Wrong choices show a light red background, red side bar and cross, with only that choice's explanation. Retry this question clears only the current selection and feedback; the current run position and other questions' progress remain intact. The learner must answer correctly before advancing. Correct choices show a light green background, green side bar and tick, followed by the correct explanation and feedback for all three distractors. Full restart remains a separate secondary action. Results are labelled correct after practice; the history of questions with incorrect attempts remains available for mistakes review.
