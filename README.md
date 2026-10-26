@@ -100,3 +100,7 @@ git push origin main
 ```
 
 Then select **Settings → Pages → Deploy from a branch → main → /(root) → Save**. DNS configuration is separate from this migration. The old docs output has been moved out of the project to a local backup.
+
+## Blue interface refresh — 26 October 2026
+
+The website now uses a blue/navy palette, modern sans-serif headings, larger reading text, and a standard four-column footer shared across all pages. Main reading copy is generally 18–19 px; buttons and navigation are 16–17 px; supporting labels are generally 14–16 px. The footer stacks on smaller screens. Root publishing and all lesson URLs remain unchanged.

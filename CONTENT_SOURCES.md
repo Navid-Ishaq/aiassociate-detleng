@@ -37,3 +37,7 @@ Long source passages are organized into short explanations, expandable details, 
 - Credentials are never accepted. Account wording exactly follows the user's addendum.
 - Required ecosystem links retain their URLs, secure new-tab behavior, and fixed footer order.
 - No external provider affiliation, accredited qualification, guaranteed employment, or earnings claims are made.
+
+## User-approved visual update — 26 October 2026
+
+The latest user direction supersedes the original green/off-white palette and card-style footer: use a modern blue interface, larger site-wide text, and a standard footer matching the supplied four-column reference. Educational content, exact curriculum records, ecosystem destinations, and inactive account behavior are retained.

@@ -78,3 +78,14 @@ The generated website now lives at the project root: `index.html`, `assets/`, `l
 - Root publishing also exposes committed source/test files as repository content on GitHub Pages. The local preview explicitly blocks source and Git metadata routes. No secrets are included in this project.
 - Publication setting after the owner's push: **main → /(root)**. DNS/TLS remains a separate external configuration issue.
 - No commit, push, Pages-settings edit, or DNS change was performed by the assistant during the migration.
+
+## Blue redesign and readable typography — 26 October 2026
+
+- Replaced the green palette with blue/navy across pages, illustrations, favicon, metadata, and social artwork.
+- Updated heading typography to a modern system sans-serif style; increased reading copy, navigation, button labels, and supporting text across responsive rules.
+- Replaced ecosystem cards with a standard four-column footer: site identity, site navigation, ecosystem navigation, and learning message, followed by domain/copyright and a scope note. Required ecosystem destinations retain their order and secure new-tab behavior.
+- Browser reviewed desktop at 1440 px and mobile at 390 px. The footer account entry opens the inactive modal; Continue Free closes it.
+- Responsive fixtures at 320/390/768/1024 px showed no page overflow; the computed solid-background contrast helper reported no failures after refinements. Gradient surfaces also have explicit dark background colors for reliable contrast fallback.
+- This remains local work; no commit, push, deployment, DNS change, or authentication activation was performed.
+
+Final redesign acceptance run: **11/11 tests passed**, including 108 direct page routes and the shared standard footer. Browser smoke checks confirmed the demo feedback, exact lesson search on mobile, and footer Continue Free behavior.

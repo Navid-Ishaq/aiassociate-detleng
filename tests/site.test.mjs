@@ -90,3 +90,11 @@ test('root publishing preserves source and does not require docs output',async()
  await assert.rejects(stat(path.join(root,'docs')),error=>error.code==='ENOENT');
  for(const url of ['/src/config.mjs','/.git/config','/tests/qa/layouts.html','/assets/..%2f.git/config'])assert.equal((await fetch(base+url)).status,404,url);
 });
+
+test('every page includes the standard footer navigation and learning message',()=>{
+ for(const [route,html] of pages){
+  const footer=html.slice(html.indexOf('<footer'),html.indexOf('</footer>'));
+  for(const text of ['class="footer-columns"','aria-label="Footer navigation"','aria-label="DeTLeng ecosystem"','Learn with confidence','Login / Create Account','class="footer-base"'])assert.ok(footer.includes(text),`${route}: ${text}`);
+  assert.ok(!footer.includes('One curious mind. A wider world.'));
+ }
+});
