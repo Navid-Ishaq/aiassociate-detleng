@@ -1,0 +1,97 @@
+{
+  "id": "M01-L01",
+  "title": "What Is an LLM?",
+  "objective": "Distinguish language-model capabilities from verified knowledge and reasoning.",
+  "items": [
+    {
+      "id": "M01-L01-R001",
+      "question": "What is an LLM?",
+      "answer": "LLM stands for Large Language Model. It is an AI model trained on large amounts of text and sometimes other data to understand and generate language."
+    },
+    {
+      "id": "M01-L01-R002",
+      "question": "How does an LLM actually work?",
+      "answer": "An LLM processes your input and uses learned patterns and the available context to predict possible next tokens—small units of text. It builds a response step by step by selecting these tokens. This can produce useful text, but it does not automatically verify that the answer is true."
+    },
+    {
+      "id": "M01-L01-R003",
+      "question": "What can an LLM help me do?",
+      "answer": "An LLM can help you write emails, summarize documents, explain concepts, translate text, and answer questions. Some models can also help with coding, analysis, and other complex tasks."
+    },
+    {
+      "id": "M01-L01-R004",
+      "question": "Is an LLM the same as a search engine?",
+      "answer": "No, a search engine finds information from indexed sources, while an LLM generates responses using learned patterns and available context. Some AI applications connect an LLM to search tools, but that depends on the application."
+    },
+    {
+      "id": "M01-L01-R005",
+      "question": "Does an LLM know everything about the world?",
+      "answer": "No, an LLM has limitations and may lack recent, specialized, or private information. Even when it knows a lot about a topic, its answers are not guaranteed to be correct."
+    },
+    {
+      "id": "M01-L01-R006",
+      "question": "If an LLM gives a confident answer, does that mean the answer is correct?",
+      "answer": "Not necessarily. An LLM can sound confident even when its answer is inaccurate, so important facts should be checked against reliable sources."
+    },
+    {
+      "id": "M01-L01-R007",
+      "question": "Does an LLM understand language in the same way humans do?",
+      "answer": "Not exactly. An LLM learns complex patterns and relationships in language, but that does not mean it has human experiences or understands the world in the same way people do."
+    },
+    {
+      "id": "M01-L01-R008",
+      "question": "Can an LLM think and reason through difficult problems?",
+      "answer": "Some LLMs can solve complex problems and perform useful reasoning tasks. However, they can make logical mistakes, so their reasoning and conclusions should be checked when accuracy matters."
+    },
+    {
+      "id": "M01-L01-R009",
+      "question": "Where does an LLM get the information it uses in an answer?",
+      "answer": "An LLM uses patterns learned during training and information provided in the current conversation. Depending on the application and its permissions, it may also use connected documents or external tools."
+    },
+    {
+      "id": "M01-L01-R010",
+      "question": "If I ask the AI the same factual question twice and get the same answer, is it verified?",
+      "answer": "No. Repeating an answer does not provide independent evidence that it is correct. Check the claim against a reliable source that actually supports it."
+    },
+    {
+      "id": "M01-L01-R011",
+      "question": "Can an LLM give me information about something that happened today?",
+      "answer": "It may not know about recent events unless current information is available through a connected tool or another source. For today's information, check whether the application can access up-to-date sources."
+    },
+    {
+      "id": "M01-L01-R012",
+      "question": "Why did the LLM give me an answer that sounds correct but contains false information?",
+      "answer": "An LLM sometimes generates incorrect or unsupported information, which is often called a hallucination. This happens because producing a fluent answer is not the same as verifying that the answer is true."
+    },
+    {
+      "id": "M01-L01-R013",
+      "question": "Can I trust an LLM to calculate financial figures or solve mathematical problems?",
+      "answer": "An LLM can help explain calculations and work through mathematical problems, but it can make mistakes. For important figures, verify the results with a calculator, spreadsheet, or reliable calculation tool."
+    },
+    {
+      "id": "M01-L01-R014",
+      "question": "Can I use an LLM to understand a legal or medical document?",
+      "answer": "Yes, an LLM can help explain difficult terms and summarize information in simpler language. However, it can misunderstand important details and should not replace a qualified professional when expert judgment is needed."
+    },
+    {
+      "id": "M01-L01-R015",
+      "question": "Does every AI-generated response need an internet search?",
+      "answer": "No. Rewriting supplied text or creating a fictional greeting may only need a review of its wording and meaning. Claims about real orders, payments, dates, or policies need appropriate evidence."
+    },
+    {
+      "id": "M01-L01-R016",
+      "question": "How can I get a more useful answer from an LLM?",
+      "answer": "Explain what you need, provide relevant context, and describe the format you want. For example, instead of asking \"Explain AI,\" ask \"Explain AI to a beginner using three simple examples.\""
+    },
+    {
+      "id": "M01-L01-R017",
+      "question": "If I want to use an LLM for customer support, what should I be careful about?",
+      "answer": "An LLM can help draft replies and explain common issues, but it may provide incorrect information or misunderstand a customer's situation. Use reliable reference material, respect data permissions, and verify important answers before sharing them."
+    },
+    {
+      "id": "M01-L01-R018",
+      "question": "What is the most important thing I should remember when using an LLM?",
+      "answer": "An LLM is a powerful language tool, but a convincing answer is not necessarily a verified fact. Use it to support your work, check important information, and apply human judgment when making decisions."
+    }
+  ]
+}

@@ -29,6 +29,12 @@ export function validate(modules){
 export async function build(){
  const modules=await readJSON(path.join(root,'src/data/curriculum.json'));
  validate(modules);
+ const reviewIds=await readJSON(path.join(root,'src/data/reviews.json'));
+ if(!Array.isArray(reviewIds)||new Set(reviewIds).size!==reviewIds.length)throw Error('Invalid review manifest');
+ const allLessons=modules.flatMap(m=>m.sections.flatMap(s=>s.lessons));
+ const reviewBanks=new Map();
+ for(const id of reviewIds){if(!/^M\d{2}-L\d{2}$/.test(id)||!allLessons.some(l=>l.id===id))throw Error('Unknown review lesson: '+id);reviewBanks.set(id,await readJSON(path.join(root,'src/reviews',id+'.json')));}
+ allLessons.forEach(l=>l.reviewStatus=reviewBanks.has(l.id)?'published':'coming-soon');
  // Root publishing: overwrite only generated files. Never recursively clean the project root.
  if(out!==root)throw new Error('Unexpected output directory');
  await mkdir(path.join(out,'assets'),{recursive:true});
@@ -57,7 +63,7 @@ export async function build(){
  for(const m of modules){
   await page(reviewModulePath(m),{title:`Quick Review: ${m.title}`,description:`Quick Review for ${m.title}. Explore 12 planned lesson Q&As. ${m.focus}`,content:reviewModule(m,modules),active:'review'});
   for(const s of m.sections)for(const l of s.lessons){
-   await page(reviewLessonPath(l),{title:`Quick Review: ${l.title}`,description:`${l.id}: ${l.objective} This Quick Review is coming soon.`,content:reviewLesson(m,s,l),active:'review'});
+   await page(reviewLessonPath(l),{title:`Quick Review: ${l.title}`,description:`${l.id}: ${l.objective}${reviewBanks.has(l.id)?' Short questions, clear answers and optional listening practice.':' This Quick Review is coming soon.'}`,content:reviewLesson(m,s,l,reviewBanks.get(l.id)),active:'review'});
   }
  }
  await page('/about/',{title:'About the learning journey',content:about(),active:'about'});
@@ -66,7 +72,10 @@ export async function build(){
  await copyFile(path.join(root,'src/lesson-system/styles.css'),path.join(out,'assets/lesson.css'));
  await copyFile(path.join(root,'src/lesson-system/runtime.js'),path.join(out,'assets/lesson.js'));
  await copyFile(path.join(root,'src/styles.css'),path.join(out,'assets/styles.css'));
- await copyFile(path.join(root,'src/data/curriculum.json'),path.join(out,'assets/curriculum.json'));
+ await writeFile(path.join(out,'assets/curriculum.json'),JSON.stringify(modules,null,2));
+ await copyFile(path.join(root,'src/review-system/styles.css'),path.join(out,'assets/review.css'));
+ await copyFile(path.join(root,'src/review-system/runtime.js'),path.join(out,'assets/review.js'));
+ await copyFile(path.join(root,'src/review-system/review-listener.js'),path.join(out,'assets/review-listener.js'));
  await writeFile(path.join(out,'assets/app.js'),(await readFile(path.join(root,'src/app.js'),'utf8')).replace('__JOURNEY__',JSON.stringify(journey)));
  const favicon='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#f5f7fc"/><path d="M14 36h9v17h-9z" fill="#142b50"/><path d="M28 24h9v29h-9z" fill="#1d4ed8"/><path d="M42 12h9v41h-9z" fill="#60a5fa"/></svg>';
  await writeFile(path.join(out,'assets/favicon.svg'),favicon);

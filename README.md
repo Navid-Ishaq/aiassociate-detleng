@@ -33,7 +33,7 @@ npm run preview
 - Header/footer Login / Create Account buttons. The accessible information modal accepts no credentials. Continue Free closes it. Authentication is inactive.
 - Responsive layouts, visible keyboard focus, native controls, skip link, dialog focus handling, reduced-motion styles, and a readable fallback when JavaScript is unavailable.
 
-There are 213 content pages plus the 404 page, including 105 Quick Review directory/module/lesson pages. M01-L01 includes simulations, practice, quizzes and flashcards. The remaining lessons and all Quick Reviews are Coming Soon. Accounts, AI Mentor, saved progress and live chat remain inactive.
+There are 213 content pages plus the 404 page, including 105 Quick Review directory/module/lesson pages. M01-L01 includes simulations, practice, quizzes and flashcards. The remaining lessons and 95 Quick Reviews are Coming Soon. M01-L01 Quick Review contains 18 visible Q&A cards with Smart Listener. Accounts, AI Mentor, saved progress and live chat remain inactive.
 
 ## Project map
 
@@ -108,3 +108,7 @@ Quick Review is now available in the shared header and footer. Its directory use
 - `/quick-review/m01/l06/`: a directly addressable Quick Review Coming Soon page with the exact ID, title, objective, breadcrumbs, previous/next review links, and return actions.
 
 The same curriculum JSON supplies both hierarchies. Review routes and availability are independent of the curriculum lesson pages. Search remains local and only loads the existing small curriculum JSON; no Q&A banks are loaded or generated in this release. The 96 Q&A banks and detailed lesson content will be authored and integrated separately after review. Root publishing stays `main → /(root)`. No additional installation is needed.
+
+## Quick Review content
+
+M01-L01 has 18 approved Q&As, displayed in two columns on desktop and one column on mobile. Each card opens Smart Listener for language selection, complete-block repetition, copying and a Google Translate handoff. See [QUICK_REVIEW_AUTHORING_GUIDE.md](QUICK_REVIEW_AUTHORING_GUIDE.md). Publication is controlled by `src/data/reviews.json` and stays independent of curriculum lesson availability. Google owns translation and playback; no automatic external request is made.

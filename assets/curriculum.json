@@ -12,25 +12,29 @@
             "id": "M01-L01",
             "title": "What Is an LLM?",
             "objective": "Distinguish language-model capabilities from verified knowledge and reasoning.",
-            "status": "published"
+            "status": "published",
+            "reviewStatus": "published"
           },
           {
             "id": "M01-L02",
             "title": "Tokens and Tokenization",
             "objective": "Understand why text is broken into tokens and how usage is counted.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M01-L03",
             "title": "Context Windows and Missing Information",
             "objective": "Recognize context limits, truncation and loss of important details.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M01-L04",
             "title": "Instructions and Message Roles",
             "objective": "Explore how different instruction sources affect model behavior.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           }
         ]
       },
@@ -42,25 +46,29 @@
             "id": "M01-L05",
             "title": "Sampling and Response Variability",
             "objective": "Explain why repeated prompts may produce different valid responses.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M01-L06",
             "title": "Clear Prompts, Constraints and Examples",
             "objective": "Construct precise requests with context, goals and examples.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M01-L07",
             "title": "Structured Outputs and Validation",
             "objective": "Check whether generated JSON, tables or specified formats meet requirements.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M01-L08",
             "title": "Hallucinations and Uncertainty",
             "objective": "Recognize unsupported claims and appropriately expressed uncertainty.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           }
         ]
       },
@@ -72,25 +80,29 @@
             "id": "M01-L09",
             "title": "Grounding Answers in Evidence",
             "objective": "Use reference material and verification to support AI-generated answers.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M01-L10",
             "title": "Comparing Models Fairly",
             "objective": "Compare outputs using consistent inputs and stated evaluation criteria.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M01-L11",
             "title": "Quality Rubrics and Test Cases",
             "objective": "Build repeatable checks for accuracy, relevance, clarity and safety.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M01-L12",
             "title": "Investigating a Poor AI Answer",
             "objective": "Trace prompt problems, context gaps and incorrect assumptions.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           }
         ]
       }
@@ -109,25 +121,29 @@
             "id": "M02-L01",
             "title": "Agents Versus Fixed Workflows",
             "objective": "Distinguish planned automation steps from model-guided tool use.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M02-L02",
             "title": "Tools, Functions and Permissions",
             "objective": "Read a tool description, expected inputs and access boundaries.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M02-L03",
             "title": "Tool Selection and Execution Order",
             "objective": "Follow why an agent chooses a tool and the order of actions.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M02-L04",
             "title": "Human Approval and Safe Stop Conditions",
             "objective": "Design when an agent must stop, ask for confirmation or hand off.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           }
         ]
       },
@@ -139,25 +155,29 @@
             "id": "M02-L05",
             "title": "Search and Retrieval Fundamentals",
             "objective": "Understand how external information becomes available to an AI system.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M02-L06",
             "title": "Document Chunking and Metadata",
             "objective": "Explore splitting documents and keeping source information attached.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M02-L07",
             "title": "Embeddings and Similarity Search",
             "objective": "Understand conceptual vector similarity without requiring real vector APIs.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M02-L08",
             "title": "RAG: Retrieve, Ground and Answer",
             "objective": "Trace retrieval-augmented generation and evaluate source alignment.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           }
         ]
       },
@@ -169,25 +189,29 @@
             "id": "M02-L09",
             "title": "Missing, Stale and Irrelevant Retrieval",
             "objective": "Identify when retrieval misses or uses the wrong information.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M02-L10",
             "title": "Tool Failure Versus Model Failure",
             "objective": "Separate an invalid tool call from a poor generated explanation.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M02-L11",
             "title": "Untrusted Documents and Prompt Injection",
             "objective": "Identify instructions hidden inside retrieved content and safe boundaries.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M02-L12",
             "title": "Agent Traces and Recovery Paths",
             "objective": "Follow tool-call history, error states, retries and safe fallbacks.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           }
         ]
       }
@@ -206,25 +230,29 @@
             "id": "M03-L01",
             "title": "Client, Server, Endpoint and API",
             "objective": "Understand what a browser or app sends to a remote service.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M03-L02",
             "title": "HTTP Methods: GET, POST, PUT, PATCH, DELETE",
             "objective": "Match request methods to intended operations and safe handling.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M03-L03",
             "title": "URLs, Headers, Parameters and Bodies",
             "objective": "Read how an API request carries data and configuration.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M03-L04",
             "title": "JSON Responses and HTTP Status Families",
             "objective": "Interpret common payload shapes and 2xx, 3xx, 4xx and 5xx results.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           }
         ]
       },
@@ -236,25 +264,29 @@
             "id": "M03-L05",
             "title": "API Contracts and Schema Validation",
             "objective": "Check required fields, types and response expectations.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M03-L06",
             "title": "API Authentication Flow Basics",
             "objective": "Understand what a token or API credential is used for.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M03-L07",
             "title": "Webhooks and Event-Driven Requests",
             "objective": "Trace events that send information between systems.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M03-L08",
             "title": "Pagination and Idempotency",
             "objective": "Understand multi-page results and avoiding duplicate actions.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           }
         ]
       },
@@ -266,25 +298,29 @@
             "id": "M03-L09",
             "title": "401, 403, 404 and 409 Diagnostics",
             "objective": "Distinguish login, permission, missing resource and conflict errors.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M03-L10",
             "title": "HTTP 429 and Rate Limits",
             "objective": "Investigate excessive requests, quotas and Retry-After guidance.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M03-L11",
             "title": "Timeouts, 408, 502 and 503",
             "objective": "Distinguish connection delays, gateways and temporary unavailability.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M03-L12",
             "title": "Retries, Backoff and Failure Recovery",
             "objective": "Choose safe retry policies and avoid accidental duplicate operations.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           }
         ]
       }
@@ -303,25 +339,29 @@
             "id": "M04-L01",
             "title": "Authentication Versus Authorization",
             "objective": "Explain who a user is versus what they are permitted to do.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M04-L02",
             "title": "Sessions, Tokens and Login State",
             "objective": "Understand session boundaries and basic token exposure risks.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M04-L03",
             "title": "Roles, Groups and Membership",
             "objective": "Evaluate owner, admin and member access with explicit permissions.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M04-L04",
             "title": "Database RLS and Server-Side Checks",
             "objective": "Recognize why UI-only restrictions cannot protect stored records.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           }
         ]
       },
@@ -333,25 +373,29 @@
             "id": "M04-L05",
             "title": "API Keys, Secrets and Environment Variables",
             "objective": "Keep privileged credentials out of browser-visible code.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M04-L06",
             "title": "Tenant Isolation and Organization Boundaries",
             "objective": "Test whether data belonging to one organization leaks to another.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M04-L07",
             "title": "Private Files, Permissions and Signed Links",
             "objective": "Explore access to images, audio and temporary download links.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M04-L08",
             "title": "Personal Data, Retention and Residency",
             "objective": "Identify sensitive fields and basic retention/location considerations.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           }
         ]
       },
@@ -363,25 +407,29 @@
             "id": "M04-L09",
             "title": "Input Validation and Untrusted Content",
             "objective": "Recognize unsafe input and distinguish instructions from data.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M04-L10",
             "title": "Least Privilege and Account Lifecycle",
             "objective": "Reduce unnecessary access and remove permissions when no longer needed.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M04-L11",
             "title": "Negative Security Tests and Evidence",
             "objective": "Design read, write and update denial cases using test accounts.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M04-L12",
             "title": "Privacy Incidents and Responsible Reporting",
             "objective": "Document concerns carefully without exposing real user data.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           }
         ]
       }
@@ -400,25 +448,29 @@
             "id": "M05-L01",
             "title": "From Request to Model Response",
             "objective": "Trace the major stages of an AI request.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M05-L02",
             "title": "Input and Output Tokens",
             "objective": "Estimate tokens used for prompts and generated content.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M05-L03",
             "title": "Latency, Time to First Token and Total Time",
             "objective": "Distinguish startup delay from overall completion time.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M05-L04",
             "title": "Throughput, Concurrency and Queueing",
             "objective": "Understand multiple users competing for service capacity.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           }
         ]
       },
@@ -430,25 +482,29 @@
             "id": "M05-L05",
             "title": "Compute and Memory Constraints",
             "objective": "Understand why model size and available resources affect speed.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M05-L06",
             "title": "AI Request Cost Models",
             "objective": "Calculate illustrative usage-based model costs.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M05-L07",
             "title": "Context Budgets and Truncation",
             "objective": "Avoid unnecessarily long inputs while preserving needed information.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M05-L08",
             "title": "Caching and Reusing Results",
             "objective": "Explore when saved outputs improve speed and cost.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           }
         ]
       },
@@ -460,25 +516,29 @@
             "id": "M05-L09",
             "title": "Model Selection: Quality, Speed and Cost",
             "objective": "Choose between models using the requirements of a task.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M05-L10",
             "title": "Batch Processing Versus Real-Time Use",
             "objective": "Compare deferred and immediate processing workflows.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M05-L11",
             "title": "Quotas, Limits and Capacity Planning",
             "objective": "Recognize rate and volume limits under different usage patterns.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M05-L12",
             "title": "Budget Forecasting and Cost Incidents",
             "objective": "Analyze scenarios where usage increases unexpectedly.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           }
         ]
       }
@@ -497,25 +557,29 @@
             "id": "M06-L01",
             "title": "Issue Intake and Severity",
             "objective": "Turn a vague user complaint into a clear initial incident description.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M06-L02",
             "title": "Reproducing a Problem Safely",
             "objective": "Prepare controlled steps with expected and actual results.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M06-L03",
             "title": "Reading Logs, Traces and Metrics",
             "objective": "Recognize useful timestamps, request IDs and failure signals.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M06-L04",
             "title": "Model, Integration or Infrastructure?",
             "objective": "Separate likely origins before choosing a fix.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           }
         ]
       },
@@ -527,25 +591,29 @@
             "id": "M06-L05",
             "title": "Client-Side 4xx Error Investigation",
             "objective": "Identify mistakes involving inputs, authentication or permissions.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M06-L06",
             "title": "Rate-Limit Incidents and HTTP 429",
             "objective": "Choose safe mitigation for bursts and exceeded limits.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M06-L07",
             "title": "Server Errors: 500, 502 and 503",
             "objective": "Interpret internal failures, gateway issues and temporary outages.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M06-L08",
             "title": "Timeouts, Retries and Duplicate Work",
             "objective": "Prevent retry loops and unintended repeated actions.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           }
         ]
       },
@@ -557,25 +625,29 @@
             "id": "M06-L09",
             "title": "Monitoring, Alerts and Health Checks",
             "objective": "Read basic service health indicators and meaningful alerts.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M06-L10",
             "title": "Billing and Unexpected Usage",
             "objective": "Investigate abnormal consumption using example reports.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M06-L11",
             "title": "Bug Reports, Regression Checks and QA",
             "objective": "Write evidence-based bug reports and confirm improvements.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M06-L12",
             "title": "Incident Review and Prevention",
             "objective": "Create a concise post-incident review with actions and ownership.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           }
         ]
       }
@@ -594,25 +666,29 @@
             "id": "M07-L01",
             "title": "Understanding the User Question",
             "objective": "Clarify goals, expected outcome and relevant constraints.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M07-L02",
             "title": "Explaining Technical Concepts Simply",
             "objective": "Translate model and API behavior into plain language.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M07-L03",
             "title": "Communicating Uncertainty and Limitations",
             "objective": "Explain what is verified, suspected or not yet known.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M07-L04",
             "title": "Respectful and Empathetic Responses",
             "objective": "Support users without blame, overpromising or unnecessary jargon.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           }
         ]
       },
@@ -624,25 +700,29 @@
             "id": "M07-L05",
             "title": "Writing Effective Issue Reports",
             "objective": "Produce concise issue statements with reproducible steps.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M07-L06",
             "title": "Documenting Safe Test Evidence",
             "objective": "Record sample data, test outcomes and relevant limitations.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M07-L07",
             "title": "Cross-Team Handoffs and Responsibilities",
             "objective": "Pass clear information between product, support and technical teams.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M07-L08",
             "title": "Help Articles, FAQs and Change Notes",
             "objective": "Write reusable instructions and explain changes accurately.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           }
         ]
       },
@@ -654,25 +734,29 @@
             "id": "M07-L09",
             "title": "Running a Small AI Workshop",
             "objective": "Structure an introductory demonstration and practice exercise.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M07-L10",
             "title": "Explaining Privacy and Access to Users",
             "objective": "Describe permissions and safety responsibilities understandably.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M07-L11",
             "title": "Making Actionable Recommendations",
             "objective": "Connect observed problems to specific feasible next steps.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M07-L12",
             "title": "Case Studies, Feedback and Portfolio Narratives",
             "objective": "Present a project honestly, including what was tested and learned.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           }
         ]
       }
@@ -691,25 +775,29 @@
             "id": "M08-L01",
             "title": "Choose a Real Problem and User",
             "objective": "Describe the target user and a narrowly scoped need.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M08-L02",
             "title": "Write a Build Specification for Codex",
             "objective": "Convert the need into concrete functionality and constraints.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M08-L03",
             "title": "User Journeys, Screens and Data Flow",
             "objective": "Plan interactions and how information moves across the product.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M08-L04",
             "title": "Acceptance Criteria and Risk Boundaries",
             "objective": "Define verifiable completion conditions and security constraints.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           }
         ]
       },
@@ -721,25 +809,29 @@
             "id": "M08-L05",
             "title": "Prompting Codex for Small, Reviewable Steps",
             "objective": "Break implementation into testable tasks rather than one giant request.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M08-L06",
             "title": "Files, Git and Safe Checkpoints",
             "objective": "Understand project structure, version changes and how to revert.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M08-L07",
             "title": "Frontend, Local Data and Interactive Simulations",
             "objective": "Create a browser-based prototype that works without live APIs.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M08-L08",
             "title": "Mock Integrations and Data Contracts",
             "objective": "Simulate realistic requests, responses and failure states.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           }
         ]
       },
@@ -751,25 +843,29 @@
             "id": "M08-L09",
             "title": "Functional Tests and Acceptance Checks",
             "objective": "Verify that requirements are met on supported devices.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M08-L10",
             "title": "Security and Privacy Review of the Prototype",
             "objective": "Check data exposure, inputs, permissions and honest claims.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M08-L11",
             "title": "Debugging, Deployment and Release Checklist",
             "objective": "Fix issues, run QA and prepare a stable public demonstration.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           },
           {
             "id": "M08-L12",
             "title": "Document Results and Plan Improvements",
             "objective": "Write a portfolio case study including limitations and next steps.",
-            "status": "coming-soon"
+            "status": "coming-soon",
+            "reviewStatus": "coming-soon"
           }
         ]
       }

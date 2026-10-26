@@ -109,7 +109,7 @@
        found.forEach(({s,l}) => {
          const link = element('a','search-result');
          link.href = `${searchBase}/${l.id.toLowerCase().replace('-','/')}/`;
-         link.append(element('span','search-group-label',`${l.id} · ${s.title} · ${isReview ? 'Quick Review · Coming soon' : l.status === 'published' ? 'Available' : 'Coming soon'}`),element('h4','',l.title),element('p','',l.objective));
+         link.append(element('span','search-group-label',`${l.id} · ${s.title} · ${isReview ? (l.reviewStatus === 'published' ? 'Quick Review · Available' : 'Quick Review · Coming soon') : l.status === 'published' ? 'Available' : 'Coming soon'}`),element('h4','',l.title),element('p','',l.objective));
          group.append(link); count++;
        });
        results.append(group);

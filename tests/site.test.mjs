@@ -107,12 +107,12 @@ test('every page includes the standard footer navigation and learning message',(
  }
 });
 
-test('Quick Review mirrors the exact curriculum without publishing Q&A content',()=>{
+test('Quick Review mirrors the curriculum and publishes only the approved Q&A bank',()=>{
  const directory=pages.get('/quick-review/');
  assert.ok(directory.includes('<h1>Lesson Questions &amp; Answers</h1>'));
  assert.ok(directory.includes('Refresh your understanding with short, practical questions and clear answers.'));
  assert.equal((directory.match(/class="module-card review-card"/g)||[]).length,8);
- assert.ok(directory.includes('No Q&amp;A banks are available yet.'));
+ assert.ok(directory.includes('1 Quick Review is ready.'));
  for(const m of built.modules){
   assert.ok(directory.includes(`href="${reviewModulePath(m)}"`));
   const module=pages.get(reviewModulePath(m));
@@ -121,9 +121,15 @@ test('Quick Review mirrors the exact curriculum without publishing Q&A content',
    assert.ok(module.includes(esc(lesson.title)));assert.ok(module.includes(esc(lesson.objective)));
    assert.ok(module.includes(`href="${reviewLessonPath(lesson)}"`));
    const html=pages.get(reviewLessonPath(lesson));
-   for(const text of ['Quick Review<br><em>Coming Soon</em>',`<h2>${esc(lesson.title)}</h2>`,esc(lesson.objective),'QUICK REVIEW IN PREPARATION','Back to Quick Review','Back to Review Module'])assert.ok(html.includes(text),lesson.id);
+   if(lesson.id==='M01-L01'){
+    assert.ok(html.includes('data-quick-review'));assert.ok(html.includes(`<h1>${esc(lesson.title)}</h1>`));
+    assert.equal((html.match(/class="review-qa-card"/g)||[]).length,18);
+    assert.ok(!html.includes('QUICK REVIEW IN PREPARATION'));
+   }else{
+    for(const text of ['Quick Review<br><em>Coming Soon</em>',`<h2>${esc(lesson.title)}</h2>`,esc(lesson.objective),'QUICK REVIEW IN PREPARATION','Back to Quick Review','Back to Review Module'])assert.ok(html.includes(text),lesson.id);
+    assert.ok(!html.includes('Customer:'));assert.ok(!html.includes('Your response:'));
+   }
    assert.ok(html.includes(`href="${lessonPath(lesson)}"`));
-   assert.ok(!html.includes('Customer:'));assert.ok(!html.includes('Your response:'));
   }
  }
  assert.equal(built.routes.filter(r=>r.startsWith('/quick-review/')).length,105);
@@ -167,7 +173,7 @@ test('published lesson has the complete interactive teaching sequence and indepe
  const data=JSON.parse(html.match(/<script type="application\/json" id="lesson-data">([\s\S]*?)<\/script>/)[1]);
  assert.equal(data.questions.length,15);assert.deepEqual(data.simulations.map(s=>s.cases.length),[3,3]);
  assert.ok(!pages.get('/quick-review/m01/l01/').includes('data-quiz-stage'));
- assert.ok(pages.get('/quick-review/m01/l01/').includes('QUICK REVIEW IN PREPARATION'));
+ assert.ok(pages.get('/quick-review/m01/l01/').includes('data-quick-review'));
  assert.ok(pages.get('/learn/m01/').includes('Open lesson'));assert.ok(pages.get('/').includes('Your first interactive lesson is ready.'));
 });
 test('lesson validator rejects curriculum drift, broken keys, duplicate options and incomplete feedback',async()=>{
@@ -206,4 +212,44 @@ test('lesson content preserves Unicode punctuation and has no replacement or moj
  assert.ok(data.includes('€85'));
  assert.ok(!/\uFFFD|â€|â‚|Ã¢/.test(data));
  const schema=JSON.parse((await readFile(path.join(root,'src/lesson-system/lesson.schema.json'),'utf8')).replace(/^\uFEFF/,''));assert.equal(schema.type,'object');
+});
+
+test('Quick Review source content, availability, and Smart Listener controls are independent of curriculum lessons',async()=>{
+ const bank=JSON.parse(await readFile(path.join(root,'src/reviews/M01-L01.json'),'utf8'));
+ const html=pages.get('/quick-review/m01/l01/');
+ for(const item of bank.items){assert.ok(html.includes(esc(item.question)));assert.ok(html.includes(esc(item.answer)));}
+ const embedded=JSON.parse(html.match(/id="review-data">([\s\S]*?)<\/script>/)[1]);assert.deepEqual(embedded,bank.items);
+ const asset=JSON.parse(await readFile(path.join(root,'assets/curriculum.json'),'utf8'));
+ assert.equal(asset[0].sections[0].lessons[0].reviewStatus,'published');assert.equal(asset[0].sections[0].lessons[1].reviewStatus,'coming-soon');
+ for(const token of ['aria-labelledby="listener-title"','aria-describedby="listener-note"','id="listener-language"','id="listener-custom"','Copy text','Open Google Translate','shares this Q&amp;A text with Google','target="_blank" rel="noopener noreferrer"'])assert.ok(html.includes(token),token);
+ assert.equal((html.match(/data-listen="/g)||[]).length,18);
+ const available=[...pages.entries()].filter(([r,h])=>r.startsWith('/quick-review/')&&h.includes('data-quick-review'));assert.equal(available.length,1);
+});
+test('Smart Listener preserves full Unicode text, repeats complete Q&As and fixes the source language to English',async()=>{
+ const {prepareListener,reviewLanguages}=await import('../src/review-system/review-listener.js');
+ const item={question:'What does €85 mean?',answer:'It is €85 — not €58. Check names like José and words such as heiß.'};
+ for(const [language] of reviewLanguages){const p=prepareListener(item,language,3);assert.equal(p.fits,true);const url=new URL(p.url);assert.equal(url.origin,'https://translate.google.com');assert.equal(url.searchParams.get('sl'),'en');assert.equal(url.searchParams.get('tl'),language);assert.equal(url.searchParams.get('text'),Array(3).fill(p.baseText).join('\n\n'));}
+});
+test('Smart Listener rejects invalid counts and languages, and blocks oversized links without truncating content',async()=>{
+ const {prepareListener}=await import('../src/review-system/review-listener.js');const item={question:'Q?',answer:'Answer.'};
+ for(const count of [0,-1,1.5,21,NaN,Infinity])assert.throws(()=>prepareListener(item,'de',count));
+ assert.throws(()=>prepareListener(item,'javascript:alert(1)',1));
+ const long={question:'Question?',answer:'Complete answer. '.repeat(300)};const p=prepareListener(long,'ur',20);assert.equal(p.fits,false);assert.equal(p.url,null);assert.equal(p.baseText,`Customer: ${long.question}\nYour response: ${long.answer}`);assert.equal(p.text,Array(20).fill(p.baseText).join('\n\n'));
+});
+test('Quick Review validation rejects mismatched lessons, duplicate questions and incomplete answers',async()=>{
+ const {validateReview}=await import('../src/review-system/review-listener.js');const bank=JSON.parse(await readFile(path.join(root,'src/reviews/M01-L01.json'),'utf8'));const lesson=built.modules[0].sections[0].lessons[0];validateReview(bank,lesson);
+ for(const mutate of [b=>b.title='Wrong title',b=>b.items[1].id=b.items[0].id,b=>b.items[1].question=b.items[0].question,b=>b.items[0].answer='',b=>b.items=Array(26).fill(b.items[0])]){const bad=structuredClone(bank);mutate(bad);assert.throws(()=>validateReview(bad,lesson));}
+});
+test('review module scripts and styles are served locally without automatic Google requests',async()=>{
+ for(const name of ['review.css','review.js','review-listener.js']){const r=await fetch(base+'/assets/'+name);assert.equal(r.status,200);assert.match(r.headers.get('content-type'),/javascript|css/);}
+ const js=await readFile(path.join(root,'assets/review.js'),'utf8');assert.ok(!/fetch\(|XMLHttpRequest|sendBeacon|localStorage|document\.cookie/.test(js));
+});
+
+test('Quick Review escapes HTML-like source text and preserves it in its inert JSON payload',async()=>{
+ const {publishedReview}=await import('../src/review-system/render.mjs');
+ const bank=JSON.parse(await readFile(path.join(root,'src/reviews/M01-L01.json'),'utf8'));
+ bank.items[0].question='What does </script><img src=x onerror=alert(1)> mean?';
+ const m=built.modules[0],s=m.sections[0],l=s.lessons[0],html=publishedReview(m,s,l,bank);
+ assert.ok(!html.includes(bank.items[0].question));assert.ok(html.includes(esc(bank.items[0].question)));
+ const embedded=JSON.parse(html.match(/id="review-data">([\s\S]*?)<\/script>/)[1]);assert.equal(embedded[0].question,bank.items[0].question);
 });

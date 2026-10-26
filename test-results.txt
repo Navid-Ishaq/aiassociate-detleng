@@ -1,30 +1,36 @@
 Built 213 pages + 404 in project root: 8 modules, 24 sections, 96 curriculum lessons + 96 Quick Reviews.
-✔ curriculum has the exact 8 × 3 × 4 structure and predictable IDs (283.731ms)
-✔ every official title and objective is present on its module and lesson page (1.012ms)
-✔ all internal links, asset references, and fragment targets resolve in generated files (413.5764ms)
-✔ all 213 direct routes return 200; no-slash lesson URLs redirect to working pages (180.4927ms)
-✔ unknown pages show a useful 404 with HTTP 404 status (4.4771ms)
-✔ every page has metadata, one H1, landmarks, unique IDs, and labelled inactive account dialog (6.6321ms)
-✔ ecosystem destinations have secure new-tab attributes and fixed footer order (1.6563ms)
-✔ script has no unresolved build tokens, credential service, analytics, or remote asset dependencies (2.3528ms)
-✔ sitemap, CNAME, and production output agree with the configured hostname (3.5151ms)
-✔ root publishing preserves source and does not require docs output (9.6594ms)
-✔ every page includes the standard footer navigation and learning message (2.6547ms)
-✔ Quick Review mirrors the exact curriculum without publishing Q&A content (1.5602ms)
-✔ Quick Review entry points and active section appear correctly across the site (2.8151ms)
-✔ review previous/next links stay in Quick Review and handle module boundaries (0.6041ms)
-✔ direct Quick Review URLs redirect correctly; invalid review routes return 404 (9.4164ms)
-✔ published lesson has the complete interactive teaching sequence and independent review status (1.3431ms)
-✔ lesson validator rejects curriculum drift, broken keys, duplicate options and incomplete feedback (6.1871ms)
-✔ source assessment text and keys survive rendering; JSON cannot break out of its script element (4.56ms)
-✔ recovered references are secure descriptive links without tracking parameters (0.3494ms)
-✔ lesson assets are local, served successfully, and collect no learner responses (4.8462ms)
-✔ lesson content preserves Unicode punctuation and has no replacement or mojibake characters (2.6479ms)
-ℹ tests 21
+✔ curriculum has the exact 8 × 3 × 4 structure and predictable IDs (332.5826ms)
+✔ every official title and objective is present on its module and lesson page (1.1717ms)
+✔ all internal links, asset references, and fragment targets resolve in generated files (404.5027ms)
+✔ all 213 direct routes return 200; no-slash lesson URLs redirect to working pages (186.338ms)
+✔ unknown pages show a useful 404 with HTTP 404 status (6.5888ms)
+✔ every page has metadata, one H1, landmarks, unique IDs, and labelled inactive account dialog (6.9283ms)
+✔ ecosystem destinations have secure new-tab attributes and fixed footer order (1.7452ms)
+✔ script has no unresolved build tokens, credential service, analytics, or remote asset dependencies (2.9185ms)
+✔ sitemap, CNAME, and production output agree with the configured hostname (4.8756ms)
+✔ root publishing preserves source and does not require docs output (9.9867ms)
+✔ every page includes the standard footer navigation and learning message (2.6362ms)
+✔ Quick Review mirrors the curriculum and publishes only the approved Q&A bank (1.8368ms)
+✔ Quick Review entry points and active section appear correctly across the site (2.5741ms)
+✔ review previous/next links stay in Quick Review and handle module boundaries (0.4648ms)
+✔ direct Quick Review URLs redirect correctly; invalid review routes return 404 (12.0737ms)
+✔ published lesson has the complete interactive teaching sequence and independent review status (2.5895ms)
+✔ lesson validator rejects curriculum drift, broken keys, duplicate options and incomplete feedback (14.9772ms)
+✔ source assessment text and keys survive rendering; JSON cannot break out of its script element (5.2068ms)
+✔ recovered references are secure descriptive links without tracking parameters (0.3551ms)
+✔ lesson assets are local, served successfully, and collect no learner responses (9.6001ms)
+✔ lesson content preserves Unicode punctuation and has no replacement or mojibake characters (5.951ms)
+✔ Quick Review source content, availability, and Smart Listener controls are independent of curriculum lessons (9.6948ms)
+✔ Smart Listener preserves full Unicode text, repeats complete Q&As and fixes the source language to English (6.1457ms)
+✔ Smart Listener rejects invalid counts and languages, and blocks oversized links without truncating content (4.0951ms)
+✔ Quick Review validation rejects mismatched lessons, duplicate questions and incomplete answers (4.1362ms)
+✔ review module scripts and styles are served locally without automatic Google requests (8.8345ms)
+✔ Quick Review escapes HTML-like source text and preserves it in its inert JSON payload (4.0533ms)
+ℹ tests 27
 ℹ suites 0
-ℹ pass 21
+ℹ pass 27
 ℹ fail 0
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 1055.181
+ℹ duration_ms 1227.841

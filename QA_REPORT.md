@@ -129,3 +129,16 @@ No Q&A banks or detailed lessons have been generated or published. No commit, pu
 - End-to-end run: 15/15 correct after practice, with four questions retained in incorrect-attempt history. No browser console errors were observed.
 - Existing 21 automated checks passed after the update. The shared engine and generated root assets are updated; no content bank, curriculum availability, authentication or simulation behaviour changed.
 - No commit or push was performed.
+
+## Quick Review and Smart Listener acceptance
+
+- Source: the supplied M01.docx contains the approved 18-pair What Is an LLM? review only. All pairs were imported into `src/reviews/M01-L01.json`, preserving the question/answer text and fixing paragraph-boundary formatting during import.
+- Only M01-L01 Quick Review is available. The other 95 reviews stay Coming Soon. Full curriculum lesson status remains independent. Directory/module cards and local search use the build-derived review availability.
+- Two Q&A cards per desktop row; one per mobile row; both Customer and Your response remain visible. Each numbered card opens its own accessible Smart Listener dialog. Local full-text search includes questions and answers, with empty-state feedback.
+- Source English fixed; target German initially, with 13 target-language choices. Presets 1x/3x/5x and custom 1–20 whole-number counts prepare repeated complete Q&A blocks. No automatic Google request is made on reading, searching, or opening a popup.
+- Generated handoff URLs specify the exact source/target languages and preserve Unicode and every repeated block. Oversized links are disabled with a clear explanation; the copy fallback copies one complete Q&A rather than truncating it. Invalid counts disable the link and copy action.
+- Browser checked: correct card mapping, repeat payload, selected language, invalid count, oversized-link state, normal copy, one-complete-Q&A copy fallback, Escape, focus restoration, Shift+Tab/Tab boundaries, no-match search, Available search result, mobile single column, and no overflow at 320px and 390px. No console errors observed in the review.
+- External handoff opened a new Google tab and reached its consent screen. Consent was dismissed, but further automated reading of the Google page failed. Translation output and audible playback were not verified. The site leaves speaker activation and playback to Google, as the popup explains.
+- Automated suite: 27/27 passed, including all existing 213 route checks plus independent review availability, source content, complete repeated payloads, every supported language code, invalid/oversized input, validator rejection, local assets and inert JSON escaping.
+- Shared implementation: `src/review-system/`; publication manifest: `src/data/reviews.json`. See `QUICK_REVIEW_AUTHORING_GUIDE.md` for adding future Q&As.
+- No commit, push, deployment, DNS change or authentication activation.
