@@ -112,3 +112,7 @@ The same curriculum JSON supplies both hierarchies. Review routes and availabili
 ## Quick Review content
 
 M01-L01 has 18 approved Q&As, displayed in two columns on desktop and one column on mobile. Each card opens Smart Listener for language selection, complete-block repetition, copying and a Google Translate handoff. See [QUICK_REVIEW_AUTHORING_GUIDE.md](QUICK_REVIEW_AUTHORING_GUIDE.md). Publication is controlled by `src/data/reviews.json` and stays independent of curriculum lesson availability. Google owns translation and playback; no automatic external request is made.
+
+## Shared AI Guide structure
+
+A shared Guide panel is available across the site and each Quick Review card can select its own question/answer context. The Guide catalog covers all 96 lesson outlines and resolves published content separately. Live AI remains disabled; no Render, Mastra or Groq connection has been enabled. See [AI_GUIDE_SETUP.md](AI_GUIDE_SETUP.md) for the panel, local service contract, tests and the next connection stage.

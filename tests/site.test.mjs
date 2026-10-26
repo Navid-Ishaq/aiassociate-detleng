@@ -253,3 +253,11 @@ test('Quick Review escapes HTML-like source text and preserves it in its inert J
  assert.ok(!html.includes(bank.items[0].question));assert.ok(html.includes(esc(bank.items[0].question)));
  const embedded=JSON.parse(html.match(/id="review-data">([\s\S]*?)<\/script>/)[1]);assert.equal(embedded[0].question,bank.items[0].question);
 });
+
+test('shared AI Guide shell is present on every page and all Quick Review cards hand over stable context IDs',async()=>{
+ for(const [route,html]of pages){for(const marker of ['id="guide-launcher"','id="guide-panel"','id="guide-conversation"','id="guide-message"','id="guide-send"','Privacy details','Online AI is not connected. No messages are sent to an AI provider.'])assert.ok(html.includes(marker),route+': '+marker);}
+ const review=pages.get('/quick-review/m01/l01/');assert.equal((review.match(/data-guide-review="/g)||[]).length,18);assert.ok(review.includes('data-guide-lesson="M01-L01" data-guide-review="M01-L01-R002"'));
+ const catalog=JSON.parse(await readFile(path.join(root,'assets/guide-catalog.json'),'utf8'));assert.equal(catalog.lessons.length,96);assert.equal(catalog.lessons.filter(l=>l.status==='published').length,1);assert.equal(catalog.lessons.filter(l=>l.reviewStatus==='published').length,1);
+ for(const asset of ['guide.js','guide-protocol.js','guide.css','guide-config.json','guide-catalog.json'])assert.equal((await fetch(base+'/assets/'+asset)).status,200);
+ for(const privatePath of ['/guide-server/server.mjs','/guide-server/GUIDE_INSTRUCTIONS.md','/.env'])assert.equal((await fetch(base+privatePath)).status,404);
+});

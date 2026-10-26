@@ -142,3 +142,18 @@ No Q&A banks or detailed lessons have been generated or published. No commit, pu
 - Automated suite: 27/27 passed, including all existing 213 route checks plus independent review availability, source content, complete repeated payloads, every supported language code, invalid/oversized input, validator rejection, local assets and inert JSON escaping.
 - Shared implementation: `src/review-system/`; publication manifest: `src/data/reviews.json`. See `QUICK_REVIEW_AUTHORING_GUIDE.md` for adding future Q&As.
 - No commit, push, deployment, DNS change or authentication activation.
+
+## Shared AI Guide structure acceptance
+
+- One recognisable AI Guide panel and launcher are present on all 213 routes plus 404. Each of the 18 Quick Review cards has its own AI Guide button alongside Smart Listener.
+- Card handoff carries stable lesson/review IDs and displays the exact approved question and answer. General chat, lesson chat and each selected Q&A have separate in-page histories. Changing a topic does not mix conversations.
+- The generated Guide catalog includes all 96 exact lesson outlines and availability. Full approved content is included only for published lessons/reviews. New published content is picked up automatically by the build. Coming Soon lessons remain explicitly outlines only.
+- Live AI is disabled in public configuration; no Render/Mastra/Groq service or model was connected, no provider credential was added and no external AI requests were made. Normal Send shows an honest not-connected notice and useful lesson/review links, not a fabricated AI answer.
+- Enter sends, Shift+Enter supports multiline text, and input-method composition is guarded. Blank and overlong messages are rejected. Pending sends are guarded; the composer stays visible and rendering does not take focus from it.
+- Chat rendering scrolls only the conversation container with reduced-motion support. The local browser fixture verified connection/waking notice, deliberate retry, thinking, synthetic reply, failure, duplicate Enter protection, composer focus, independent contexts and unchanged page scroll. Fixture replies were explicitly labelled synthetic and used no online provider.
+- Mobile viewport checks at 390x844 and 320x740 showed no horizontal document overflow and the composer/Send control remained within the viewport. Closing restored the launcher. The production browser check showed 97 topic options (general plus 96 lessons), correct approved Q&A context, and zero synthetic/live assistant replies.
+- Local service scaffold has health/chat contracts, server-side context lookup, validation, explicit origins, basic limits, bounded history and temporary request-ID deduplication. A unit test confirmed concurrent duplicate requests and explicit retry invoked the synthetic generator only once. This cache is per-process; durable production deduplication and the actual provider adapter remain next-stage work.
+- Privacy details distinguish this inactive stage from future online processing. Messages remain in page memory for this stage; future online request-result handling and provider sharing are explained. No accounts, saved chat history or microphone access are enabled.
+- Automated suite: 34/34 passed. Existing lesson MCQ retry, Smart Listener, curriculum, availability, account dialog, footer, routes and metadata checks still pass.
+- Shared source: src/guide-system/. Local service scaffold: guide-server/. Setup and next-stage notes: AI_GUIDE_SETUP.md. The isolated browser fixture is tests/guide-browser-fixture.mjs and must not be deployed as the actual Guide.
+- No commit, push, deployment, DNS change or paid-plan activation was performed.

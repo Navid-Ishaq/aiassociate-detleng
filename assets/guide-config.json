@@ -1,0 +1,8 @@
+{
+  "enabled": false,
+  "apiBase": "",
+  "maxMessageCharacters": 2000,
+  "maxHistoryMessages": 10,
+  "connectionTimeoutMs": 45000,
+  "replyTimeoutMs": 60000
+}

@@ -1,6 +1,7 @@
 import {readFile,writeFile,mkdir,copyFile} from 'node:fs/promises';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
+import {createGuideCatalog} from '../src/guide-system/catalog.mjs';
 import {site} from '../src/config.mjs';
 import {renderLesson} from '../src/lesson-system/render.mjs';
 import {layout,curriculum,modulePage,lessonPage,notFound,modulePath,lessonPath,esc,journey,breadcrumbs} from '../src/templates.mjs';
@@ -39,6 +40,7 @@ export async function build(){
  if(out!==root)throw new Error('Unexpected output directory');
  await mkdir(path.join(out,'assets'),{recursive:true});
  const routes=[];
+ const publishedLessons=new Map();
  async function page(route, options){
   const file=route==='/404.html'?path.join(out,'404.html'):path.join(out,route,'index.html');
   await mkdir(path.dirname(file),{recursive:true});
@@ -54,6 +56,7 @@ export async function build(){
    if(l.status==='published'){
     const lesson=await readJSON(path.join(root,'src/lessons',l.id,'lesson.json'));
     const questions=await readJSON(path.join(root,'src/lessons',l.id,'questions.json'));
+    publishedLessons.set(l.id,lesson);
     content=renderLesson(m,s,l,lesson,questions);
    }else content=lessonPage(m,s,l);
    await page(lessonPath(l),{title:l.title,description:`${l.id}: ${l.objective}${l.status==='coming-soon'?' This lesson is coming soon.':''}`,content,active:'learn'});
@@ -73,6 +76,13 @@ export async function build(){
  await copyFile(path.join(root,'src/lesson-system/runtime.js'),path.join(out,'assets/lesson.js'));
  await copyFile(path.join(root,'src/styles.css'),path.join(out,'assets/styles.css'));
  await writeFile(path.join(out,'assets/curriculum.json'),JSON.stringify(modules,null,2));
+ await writeFile(path.join(out,'assets/guide-catalog.json'),JSON.stringify(createGuideCatalog(modules)));
+ await copyFile(path.join(root,'src/guide-system/config.json'),path.join(out,'assets/guide-config.json'));
+ await copyFile(path.join(root,'src/guide-system/runtime.js'),path.join(out,'assets/guide.js'));
+ await copyFile(path.join(root,'src/guide-system/protocol.js'),path.join(out,'assets/guide-protocol.js'));
+ await copyFile(path.join(root,'src/guide-system/styles.css'),path.join(out,'assets/guide.css'));
+ await mkdir(path.join(out,'assets/guide-content'),{recursive:true});
+ for(const l of allLessons)if(publishedLessons.has(l.id)||reviewBanks.has(l.id))await writeFile(path.join(out,'assets/guide-content',l.id+'.json'),JSON.stringify({lessonId:l.id,title:l.title,objective:l.objective,lesson:publishedLessons.get(l.id)||null,review:reviewBanks.get(l.id)||null}));
  await copyFile(path.join(root,'src/review-system/styles.css'),path.join(out,'assets/review.css'));
  await copyFile(path.join(root,'src/review-system/runtime.js'),path.join(out,'assets/review.js'));
  await copyFile(path.join(root,'src/review-system/review-listener.js'),path.join(out,'assets/review-listener.js'));
