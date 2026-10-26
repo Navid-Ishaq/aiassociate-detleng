@@ -76,6 +76,9 @@
  }
  const search = $('#curriculum-search');
  if (search) {
+   const isReview = search.dataset.searchKind === 'review';
+   const searchBase = search.dataset.searchBase || '/learn';
+   const idleStatus = isReview ? '8 modules · choose a lesson to review' : '8 modules · choose a place to begin';
    const modulesGrid = $('#curriculum-modules'), results = $('#search-results'), status = $('#search-status'), clear = $('#clear-search');
    let modules = null;
    // Only editorial curriculum data is loaded. Search terms never leave the browser.
@@ -90,7 +93,7 @@
    function render() {
      const query = search.value.trim().toLowerCase();
      clear.hidden = !search.value;
-     if (!query) {modulesGrid.hidden = false; results.hidden = true; results.replaceChildren(); status.textContent = '8 modules · choose a place to begin'; return;}
+     if (!query) {modulesGrid.hidden = false; results.hidden = true; results.replaceChildren(); status.textContent = idleStatus; return;}
      if (!modules) {status.textContent = 'Loading the curriculum…'; return;}
      const tokens = query.split(/\s+/);
      results.replaceChildren();
@@ -105,14 +108,14 @@
        group.append(element('h3','',`${m.id} · ${m.title}`));
        found.forEach(({s,l}) => {
          const link = element('a','search-result');
-         link.href = `/learn/${l.id.toLowerCase().replace('-','/')}/`;
-         link.append(element('span','search-group-label',`${l.id} · ${s.title} · ${l.status === 'published' ? 'Available' : 'Coming soon'}`),element('h4','',l.title),element('p','',l.objective));
+         link.href = `${searchBase}/${l.id.toLowerCase().replace('-','/')}/`;
+         link.append(element('span','search-group-label',`${l.id} · ${s.title} · ${isReview ? 'Quick Review · Coming soon' : l.status === 'published' ? 'Available' : 'Coming soon'}`),element('h4','',l.title),element('p','',l.objective));
          group.append(link); count++;
        });
        results.append(group);
      });
      modulesGrid.hidden = true; results.hidden = false;
-     status.textContent = `${count} lesson${count === 1 ? '' : 's'} found for “${search.value.trim()}”`;
+     status.textContent = `${count} ${isReview ? 'lesson review' : 'lesson'}${count === 1 ? '' : 's'} found for “${search.value.trim()}”`;
      if (!count) {
        const empty = element('div','search-empty');
        empty.append(element('h3','','No matching lessons yet.'),element('p','','Try a topic like “context”, “privacy”, or “API”, or use a lesson ID such as M03-L10.'));

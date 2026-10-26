@@ -1,20 +1,24 @@
-Built 108 pages + 404 in project root: 8 modules, 24 sections, 96 lessons.
-✔ curriculum has the exact 8 × 3 × 4 structure and predictable IDs (151.5712ms)
-✔ every official title and objective is present on its module and lesson page (0.9979ms)
-✔ all internal links, asset references, and fragment targets resolve in generated files (205.3382ms)
-✔ all 108 direct routes return 200; no-slash lesson URLs redirect to working pages (128.2952ms)
-✔ unknown pages show a useful 404 with HTTP 404 status (5.6697ms)
-✔ every page has metadata, one H1, landmarks, unique IDs, and labelled inactive account dialog (3.8804ms)
-✔ ecosystem destinations have secure new-tab attributes and fixed footer order (0.9874ms)
-✔ script has no unresolved build tokens, credential service, analytics, or remote asset dependencies (2.1034ms)
-✔ sitemap, CNAME, and production output agree with the configured hostname (4.1974ms)
-✔ root publishing preserves source and does not require docs output (9.0592ms)
-✔ every page includes the standard footer navigation and learning message (1.4142ms)
-ℹ tests 11
+Built 213 pages + 404 in project root: 8 modules, 24 sections, 96 curriculum lessons + 96 Quick Reviews.
+✔ curriculum has the exact 8 × 3 × 4 structure and predictable IDs (279.8034ms)
+✔ every official title and objective is present on its module and lesson page (1.0635ms)
+✔ all internal links, asset references, and fragment targets resolve in generated files (346.7599ms)
+✔ all 213 direct routes return 200; no-slash lesson URLs redirect to working pages (181.6959ms)
+✔ unknown pages show a useful 404 with HTTP 404 status (8.9397ms)
+✔ every page has metadata, one H1, landmarks, unique IDs, and labelled inactive account dialog (6.8259ms)
+✔ ecosystem destinations have secure new-tab attributes and fixed footer order (1.6604ms)
+✔ script has no unresolved build tokens, credential service, analytics, or remote asset dependencies (2.3187ms)
+✔ sitemap, CNAME, and production output agree with the configured hostname (5.9505ms)
+✔ root publishing preserves source and does not require docs output (14.7379ms)
+✔ every page includes the standard footer navigation and learning message (2.4739ms)
+✔ Quick Review mirrors the exact curriculum without publishing Q&A content (1.6364ms)
+✔ Quick Review entry points and active section appear correctly across the site (2.4841ms)
+✔ review previous/next links stay in Quick Review and handle module boundaries (0.511ms)
+✔ direct Quick Review URLs redirect correctly; invalid review routes return 404 (10.213ms)
+ℹ tests 15
 ℹ suites 0
-ℹ pass 11
+ℹ pass 15
 ℹ fail 0
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 624.9019
+ℹ duration_ms 989.4694

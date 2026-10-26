@@ -89,3 +89,19 @@ The generated website now lives at the project root: `index.html`, `assets/`, `l
 - This remains local work; no commit, push, deployment, DNS change, or authentication activation was performed.
 
 Final redesign acceptance run: **11/11 tests passed**, including 108 direct page routes and the shared standard footer. Browser smoke checks confirmed the demo feedback, exact lesson search on mobile, and footer Continue Free behavior.
+
+## Quick Review integration — 26 October 2026
+
+Current acceptance result: **15/15 tests passed**, covering **213 direct page routes plus custom 404 behavior**. The added hierarchy comprises one directory, 8 module pages, and 96 lesson-review Coming Soon pages.
+
+Verified:
+- All 96 official IDs, exact lesson titles, and objectives independently matched the supplied curriculum DOCX again.
+- Every page includes header/footer Quick Review entry points; review pages show the correct active section.
+- All new module/lesson links, section fragments, breadcrumbs, previous/next review links, and return actions resolve. Review navigation stays inside `/quick-review/`; the explicit curriculum cross-link points to the matching detailed-lesson route.
+- All 213 direct routes return HTTP 200. No-slash review URLs redirect correctly, and invalid review paths return HTTP 404.
+- Browser search for M01-L06 returns the correct review title and `/quick-review/m01/l06/` URL.
+- Mobile navigation at 390 px opens Quick Review, then its module and lesson; the menu closes after selection.
+- Responsive/contrast fixtures at 320, 390, 768, and 1440 px include new review pages. No horizontal page overflow or computed solid-background text contrast failures were found.
+- Blue design, readable typography, standard footer, root publishing, inactive account modal, and the existing curriculum are retained.
+
+No Q&A banks or detailed lessons have been generated or published. No commit, push, remote setting change, deployment, or authentication activation was performed.

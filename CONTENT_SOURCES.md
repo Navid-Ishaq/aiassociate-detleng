@@ -41,3 +41,7 @@ Long source passages are organized into short explanations, expandable details, 
 ## User-approved visual update — 26 October 2026
 
 The latest user direction supersedes the original green/off-white palette and card-style footer: use a modern blue interface, larger site-wide text, and a standard footer matching the supplied four-column reference. Educational content, exact curriculum records, ecosystem destinations, and inactive account behavior are retained.
+
+## Quick Review integration — 26 October 2026
+
+The supplied curriculum DOCX was independently checked again: all 96 lesson ID/title/objective records match the existing shared curriculum data. The latest user request authorizes the Quick Review navigation hierarchy and Coming Soon pages only. No customer Q&A banks or full lesson content were authored, invented, or activated. Review module names, focus descriptions, section names, lesson IDs, exact titles, and objectives come from the same authoritative curriculum.

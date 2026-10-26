@@ -5,6 +5,7 @@ import path from 'node:path';
 import {build,root,validate} from '../scripts/build.mjs';
 import {createServer} from '../scripts/serve.mjs';
 import {esc,modulePath,lessonPath} from '../src/templates.mjs';
+import {reviewModulePath,reviewLessonPath} from '../src/quick-review.mjs';
 let built,server,base,pages;
 before(async()=>{
  built=await build();
@@ -42,7 +43,7 @@ test('all internal links, asset references, and fragment targets resolve in gene
   }
  }
 });
-test('all 108 direct routes return 200; no-slash lesson URLs redirect to working pages',async()=>{
+test('all 213 direct routes return 200; no-slash lesson URLs redirect to working pages',async()=>{
  for(let i=0;i<built.routes.length;i+=12){await Promise.all(built.routes.slice(i,i+12).map(async r=>{const response=await fetch(base+r);assert.equal(response.status,200,r);assert.match(response.headers.get('content-type'),/text\/html/);}));}
  const response=await fetch(base+'/learn/m03/l10',{redirect:'manual'});assert.equal(response.status,301);assert.equal(response.headers.get('location'),'/learn/m03/l10/');
  const lesson=await fetch(base+'/learn/m03/l10');assert.match(await lesson.text(),/HTTP 429 and Rate Limits/);
@@ -79,7 +80,7 @@ test('sitemap, CNAME, and production output agree with the configured hostname',
  const {site}=await import('../src/config.mjs');
  assert.equal((await readFile(path.join(built.out,'CNAME'),'utf8')).trim(),new URL(site.origin).hostname);
  const sitemap=await readFile(path.join(built.out,'sitemap.xml'),'utf8');
- assert.equal((sitemap.match(/<loc>/g)||[]).length,108);assert.ok(!sitemap.includes('404.html'));
+ assert.equal((sitemap.match(/<loc>/g)||[]).length,213);assert.ok(!sitemap.includes('404.html'));
 });
 
 
@@ -97,4 +98,55 @@ test('every page includes the standard footer navigation and learning message',(
   for(const text of ['class="footer-columns"','aria-label="Footer navigation"','aria-label="DeTLeng ecosystem"','Learn with confidence','Login / Create Account','class="footer-base"'])assert.ok(footer.includes(text),`${route}: ${text}`);
   assert.ok(!footer.includes('One curious mind. A wider world.'));
  }
+});
+
+test('Quick Review mirrors the exact curriculum without publishing Q&A content',()=>{
+ const directory=pages.get('/quick-review/');
+ assert.ok(directory.includes('<h1>Lesson Questions &amp; Answers</h1>'));
+ assert.ok(directory.includes('Refresh your understanding with short, practical questions and clear answers.'));
+ assert.equal((directory.match(/class="module-card review-card"/g)||[]).length,8);
+ assert.ok(directory.includes('No Q&amp;A banks are available yet.'));
+ for(const m of built.modules){
+  assert.ok(directory.includes(`href="${reviewModulePath(m)}"`));
+  const module=pages.get(reviewModulePath(m));
+  assert.equal((module.match(/class="lesson-row review-lesson"/g)||[]).length,12);
+  for(const section of m.sections)for(const lesson of section.lessons){
+   assert.ok(module.includes(esc(lesson.title)));assert.ok(module.includes(esc(lesson.objective)));
+   assert.ok(module.includes(`href="${reviewLessonPath(lesson)}"`));
+   const html=pages.get(reviewLessonPath(lesson));
+   for(const text of ['Quick Review<br><em>Coming Soon</em>',`<h2>${esc(lesson.title)}</h2>`,esc(lesson.objective),'QUICK REVIEW IN PREPARATION','Back to Quick Review','Back to Review Module'])assert.ok(html.includes(text),lesson.id);
+   assert.ok(html.includes(`href="${lessonPath(lesson)}"`));
+   assert.ok(!html.includes('Customer:'));assert.ok(!html.includes('Your response:'));
+  }
+ }
+ assert.equal(built.routes.filter(r=>r.startsWith('/quick-review/')).length,105);
+});
+test('Quick Review entry points and active section appear correctly across the site',()=>{
+ for(const [route,html] of pages){
+  const header=html.slice(html.indexOf('<header'),html.indexOf('</header>'));
+  const footer=html.slice(html.indexOf('<footer'),html.indexOf('</footer>'));
+  assert.ok(header.includes('href="/quick-review/"'));assert.ok(footer.includes('href="/quick-review/"'));
+  if(route.startsWith('/quick-review/')){
+   assert.ok(header.includes('href="/quick-review/" aria-current="page"'));
+   assert.ok(!header.includes('href="/learn/" aria-current="page"'));
+  }
+ }
+});
+test('review previous/next links stay in Quick Review and handle module boundaries',()=>{
+ for(const m of built.modules){
+  const lessons=m.sections.flatMap(s=>s.lessons);
+  lessons.forEach((l,i)=>{
+   const html=pages.get(reviewLessonPath(l));
+   const navigation=html.slice(html.indexOf('<nav class="page-pagination"'));
+   if(i>0)assert.ok(navigation.includes(`href="${reviewLessonPath(lessons[i-1])}"`));
+   else assert.ok(!navigation.includes('← PREVIOUS REVIEW'));
+   if(i<lessons.length-1)assert.ok(navigation.includes(`href="${reviewLessonPath(lessons[i+1])}"`));
+   else assert.ok(!navigation.includes('NEXT REVIEW →'));
+  });
+ }
+});
+test('direct Quick Review URLs redirect correctly; invalid review routes return 404',async()=>{
+ const redirect=await fetch(base+'/quick-review/m03/l10',{redirect:'manual'});assert.equal(redirect.status,301);assert.equal(redirect.headers.get('location'),'/quick-review/m03/l10/');
+ const response=await fetch(base+'/quick-review/m03/l10');assert.equal(response.status,200);assert.match(await response.text(),/Quick Review<br><em>Coming Soon/);
+ assert.equal((await fetch(base+'/quick-review/m09/l01/')).status,404);
 });

@@ -33,7 +33,7 @@ npm run preview
 - Header/footer Login / Create Account buttons. The accessible information modal accepts no credentials. Continue Free closes it. Authentication is inactive.
 - Responsive layouts, visible keyboard focus, native controls, skip link, dialog focus handling, reduced-motion styles, and a readable fallback when JavaScript is unavailable.
 
-There are 108 content pages plus the 404 page. Lessons, labs, quizzes, flashcards, accounts, AI Mentor, saved progress, and live chat are not presented as available.
+There are 213 content pages plus the 404 page, including 105 Quick Review directory/module/lesson pages. Lessons, labs, quizzes, flashcards, accounts, AI Mentor, saved progress, and live chat are not presented as available.
 
 ## Project map
 
@@ -104,3 +104,13 @@ Then select **Settings → Pages → Deploy from a branch → main → /(root) �
 ## Blue interface refresh — 26 October 2026
 
 The website now uses a blue/navy palette, modern sans-serif headings, larger reading text, and a standard four-column footer shared across all pages. Main reading copy is generally 18–19 px; buttons and navigation are 16–17 px; supporting labels are generally 14–16 px. The footer stacks on smaller screens. Root publishing and all lesson URLs remain unchanged.
+
+## Quick Review navigation — 26 October 2026
+
+Quick Review is now available in the shared header and footer. Its directory uses the heading **Lesson Questions & Answers** and the introduction **Refresh your understanding with short, practical questions and clear answers.**
+
+- `/quick-review/`: 8 labelled Quick Review module cards and browser-local lesson search.
+- `/quick-review/m01/`: 3 official sections and 12 labelled lesson review links per module.
+- `/quick-review/m01/l06/`: a directly addressable Quick Review Coming Soon page with the exact ID, title, objective, breadcrumbs, previous/next review links, and return actions.
+
+The same curriculum JSON supplies both hierarchies. Review routes and availability are independent of the curriculum lesson pages. Search remains local and only loads the existing small curriculum JSON; no Q&A banks are loaded or generated in this release. The 96 Q&A banks and detailed lesson content will be authored and integrated separately after review. Root publishing stays `main → /(root)`. No additional installation is needed.

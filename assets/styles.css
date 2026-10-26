@@ -46,3 +46,11 @@ h1,h2{font-weight:650;letter-spacing:-.045em}h3,h4{font-weight:600;letter-spacin
 @media(max-width:370px){.hero h1{font-size:47px}.learning-core{left:8%;max-width:88%;padding:19px}.learning-core>p{font-size:32px}.core-step{font-size:13px}.floating-note{font-size:13px}.journey-step>span:nth-child(2){font-size:14px}.journey-step{padding:14px 10px}.step-number{font-size:13px}.curriculum-stats{font-size:16px}.module-card p{font-size:18px}}
 .learning-core{background-color:#183f83}.closing-section{background-color:#142b50}.journey-step[aria-pressed="true"] .step-number{color:#fff}.art-label{font-size:14px;max-width:100%;line-height:1.5}.core-top{font-size:14px}.core-step{font-size:15px}.core-step>span{font-size:14px}
 @media(max-width:700px){.core-top{font-size:14px;line-height:1.5}.core-step{font-size:15px}.core-step>span{font-size:14px}.art-label{font-size:13px}.hero-art{height:510px}.note-evidence{bottom:0}.learning-core{top:100px}.note-question{top:40px}.hero-copy .eyebrow{font-size:13px}.journey-step .step-number{font-size:14px}}
+/* Shared Quick Review hierarchy: same curriculum, clearly labelled Q&A cards. */
+.review-kind{display:table;border:1px solid #bfd0f7;background:#edf3ff;color:#1d4ed8;border-radius:6px;font-size:14px;font-weight:600;line-height:1.6;padding:3px 10px;letter-spacing:.01em;margin-bottom:14px}
+.review-lesson .review-kind{display:inline-flex;margin:0 12px 0 0;vertical-align:middle}
+.review-lesson .lesson-id{display:inline-block;vertical-align:middle}
+.review-card h3{margin-top:0}.review-coming-soon h1{font-size:clamp(43px,5vw,68px)}
+@media(min-width:1351px) and (max-width:1500px){.header-inner{gap:16px;width:calc(100% - 48px)}#main-nav{gap:14px}.header-desk .desk-link{font-size:13px;padding:12px}.nav-login{padding-left:14px}}
+@media(max-width:700px){.review-lesson .review-kind{margin-bottom:8px}.review-coming-soon h1{font-size:44px}.review-lesson .lesson-status{white-space:normal}}
+.review-card>.review-kind{align-self:flex-start}

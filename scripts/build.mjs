@@ -4,6 +4,7 @@ import {fileURLToPath} from 'node:url';
 import {site} from '../src/config.mjs';
 import {layout,curriculum,modulePage,lessonPage,notFound,modulePath,lessonPath,esc,journey,breadcrumbs} from '../src/templates.mjs';
 import {home,about,privacy} from '../src/pages.mjs';
+import {reviewDirectory,reviewModule,reviewLesson,reviewModulePath,reviewLessonPath} from '../src/quick-review.mjs';
 export const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const out = root;
 export const readJSON = async filename => JSON.parse((await readFile(filename,'utf8')).replace(/^\uFEFF/,''));
@@ -52,6 +53,13 @@ export async function build(){
    await page(lessonPath(l),{title:l.title,description:`${l.id}: ${l.objective}${l.status==='coming-soon'?' This lesson is coming soon.':''}`,content,active:'learn'});
   }
  }
+ await page('/quick-review/',{title:'Lesson Questions & Answers',description:'Refresh your understanding with short, practical questions and clear answers. Explore all 8 Quick Review modules and 96 planned lesson reviews.',content:reviewDirectory(modules),active:'review'});
+ for(const m of modules){
+  await page(reviewModulePath(m),{title:`Quick Review: ${m.title}`,description:`Quick Review for ${m.title}. Explore 12 planned lesson Q&As. ${m.focus}`,content:reviewModule(m,modules),active:'review'});
+  for(const s of m.sections)for(const l of s.lessons){
+   await page(reviewLessonPath(l),{title:`Quick Review: ${l.title}`,description:`${l.id}: ${l.objective} This Quick Review is coming soon.`,content:reviewLesson(m,s,l),active:'review'});
+  }
+ }
  await page('/about/',{title:'About the learning journey',content:about(),active:'about'});
  await page('/privacy/',{title:'Privacy',content:privacy()});
  await page('/404.html',{title:'Page not found',content:notFound(),noindex:true});
@@ -66,7 +74,7 @@ export async function build(){
  await writeFile(path.join(out,'robots.txt'),`User-agent: *\nAllow: /\nSitemap: ${site.origin}/sitemap.xml\n`);
  await writeFile(path.join(out,'sitemap.xml'),`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${routes.map(r=>`<url><loc>${site.origin}${r}</loc></url>`).join('')}</urlset>`);
  await writeFile(path.join(out,'route-manifest.json'),JSON.stringify({pages:routes.length,routes},null,2));
- console.log(`Built ${routes.length} pages + 404 in project root: 8 modules, 24 sections, 96 lessons.`);
+ console.log(`Built ${routes.length} pages + 404 in project root: 8 modules, 24 sections, 96 curriculum lessons + 96 Quick Reviews.`);
  return {modules,routes,out};
 }
 if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url))await build();
