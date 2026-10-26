@@ -105,3 +105,17 @@ Verified:
 - Blue design, readable typography, standard footer, root publishing, inactive account modal, and the existing curriculum are retained.
 
 No Q&A banks or detailed lessons have been generated or published. No commit, push, remote setting change, deployment, or authentication activation was performed.
+
+## Interactive M01-L01 acceptance
+
+- The current M01-L01.docx is implemented at `/learn/m01/l01/` with its exact title and learning objective. The curriculum record is published; 95 curriculum lessons and all 96 Quick Reviews remain Coming Soon.
+- Three simulations: contextual continuation, evidence decisions, and a safe customer response. Both case simulations include three cases, per-option feedback, hints, retry, navigation and reset.
+- Five independent challenges; classification and written response practice; guided spoken explanation with optional 30/45-second timer; work checklist; final application and self-assessment.
+- Fifteen source MCQs, with the same records used for flashcards. Question keys, options, explanations and distractor feedback were preserved. Browser quiz path tested: 14/15 with one deliberate wrong answer, then mistakes review 1/1.
+- Opening decision, empty answer validation, simulation options, hints, retry/reset, reply alternatives, writing comparison/self-review, classification, timer pause/reset, checklist and flashcard keyboard activation checked in the local browser.
+- Written responses remain in page memory, are never uploaded, and are not automatically graded. Practice progress is visit-only and counts completed checks, not scrolling.
+- Responsive browser checks at 320, 390, 768 and 1440px: no document overflow. Reading text is 18px on mobile and 19px on desktop. Tables scroll within their own labelled containers. Sticky outline tracking and feedback focus were verified.
+- Three Word hyperlink targets recovered and opened: Google Developers, Microsoft Learn and OpenAI Help. Tracking parameters removed. External links use secure new-tab attributes.
+- Automated suite: 21/21 passed, covering all 213 content routes, links/fragments, metadata, retained account modal and ecosystem, Quick Review independence, published lesson content, malformed assessment rejection, source answer keys, safe JSON embedding, Unicode and local assets.
+- Source: `src/lessons/M01-L01/lesson.json`, `questions.json`. Shared components: `src/lesson-system/`. See `LESSON_AUTHORING_GUIDE.md` for the next lesson. Some specialised source-to-component mappings are explicit; a new activity type requires an engine extension and verification.
+- No commit, push, deployment, DNS change or live authentication was performed.

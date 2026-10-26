@@ -1,0 +1,272 @@
+[
+  {
+    "id": "M01-L01-Q001",
+    "question": "What is a Large Language Model?",
+    "options": [
+      "A database that stores only verified information.",
+      "An AI model trained to process and generate language using learned patterns.",
+      "A search engine that always retrieves information from live websites.",
+      "A computer program that can only repeat complete sentences from its training data."
+    ],
+    "correct": 1,
+    "explanation": "An LLM uses patterns learned during training to process inputs and generate responses. Its abilities can include writing, explanation, translation and reasoning.",
+    "feedback": [
+      "A language model is not a database containing only verified facts.",
+      "Correct. An LLM uses patterns learned during training to process inputs and generate responses. Its abilities can include writing, explanation, translation and reasoning.",
+      "Some AI applications can search the web, but web access is not an automatic property of an LLM.",
+      "An LLM can produce novel combinations of language and solve tasks beyond repeating memorised sentences."
+    ]
+  },
+  {
+    "id": "M01-L01-Q002",
+    "question": "What is the main purpose of training an LLM?",
+    "options": [
+      "To make the model automatically aware of every future event.",
+      "To guarantee that the model never makes factual mistakes.",
+      "To adjust its numerical parameters so it learns patterns useful for tasks such as language prediction.",
+      "To store every training document as a separate searchable file."
+    ],
+    "correct": 2,
+    "explanation": "Training changes a model's internal numerical parameters so it becomes better at its learning objectives. Modern LLMs commonly use next-token prediction during pretraining and may undergo additional training to improve assistant behaviour.",
+    "feedback": [
+      "Training cannot automatically provide knowledge of future events.",
+      "Training improves capabilities but does not guarantee factual correctness.",
+      "Correct. Training changes a model's internal numerical parameters so it becomes better at its learning objectives. Modern LLMs commonly use next-token prediction during pretraining and may undergo additional training to improve assistant behaviour.",
+      "Model training is not equivalent to building an ordinary searchable document archive."
+    ]
+  },
+  {
+    "id": "M01-L01-Q003",
+    "question": "What is a token in an LLM?",
+    "options": [
+      "A small unit of text, which may be a word, part of a word or punctuation.",
+      "A complete paragraph that must contain at least five sentences.",
+      "A verified fact stored permanently in the model.",
+      "A special internet connection used to download documents."
+    ],
+    "correct": 0,
+    "explanation": "Language models process text using tokens. Token boundaries depend on the model's tokenisation method.",
+    "feedback": [
+      "Correct. Language models process text using tokens. Token boundaries depend on the model's tokenisation method.",
+      "A token does not have to be a paragraph or a complete sentence.",
+      "Tokens represent pieces of input or output, not verified facts.",
+      "A token is not an internet connection or document-retrieval mechanism."
+    ]
+  },
+  {
+    "id": "M01-L01-Q004",
+    "question": "Why does context matter when an LLM generates an answer?",
+    "options": [
+      "Context automatically verifies the truth of everything in the response.",
+      "Context forces the model to use exactly the same words every time.",
+      "Context removes the need to review the generated output.",
+      "Context gives the model surrounding information that helps it determine suitable responses."
+    ],
+    "correct": 3,
+    "explanation": "The model uses available context to interpret the request and generate relevant continuations. More relevant context can improve the answer, but it cannot guarantee correctness.",
+    "feedback": [
+      "Context can contain incorrect or incomplete information.",
+      "Models can produce different answers even with the same context.",
+      "Context does not eliminate factual or reasoning errors.",
+      "Correct. The model uses available context to interpret the request and generate relevant continuations. More relevant context can improve the answer, but it cannot guarantee correctness."
+    ]
+  },
+  {
+    "id": "M01-L01-Q005",
+    "question": "Which task is primarily an example of language generation rather than factual verification?",
+    "options": [
+      "Confirming whether a real customer received a refund.",
+      "Writing a fictional birthday greeting in a friendly tone.",
+      "Checking the current price of a specific airline ticket.",
+      "Determining whether a real parcel has left a warehouse."
+    ],
+    "correct": 1,
+    "explanation": "A fictional greeting mainly requires suitable language. The other tasks involve real-world facts that need appropriate evidence.",
+    "feedback": [
+      "Refund status should be checked against an authorised payment or refund record.",
+      "Correct. A fictional greeting mainly requires suitable language. The other tasks involve real-world facts that need appropriate evidence.",
+      "Current ticket pricing requires reliable and sufficiently recent information.",
+      "Real shipment status must be established from appropriate shipping information."
+    ]
+  },
+  {
+    "id": "M01-L01-Q006",
+    "question": "An AI assistant solves a supplied arithmetic problem correctly. What does this demonstrate most directly?",
+    "options": [
+      "That the model has verified every fact in the world.",
+      "That all future answers from the model will be correct.",
+      "That the model has successfully performed the calculation in this particular case.",
+      "That the model must have accessed an external database."
+    ],
+    "correct": 2,
+    "explanation": "A correct solution provides evidence of success on that problem. It does not prove universal accuracy or show which internal or external methods were used.",
+    "feedback": [
+      "Solving one problem does not verify unrelated factual information.",
+      "Correct performance on one task cannot guarantee future performance.",
+      "Correct. A correct solution provides evidence of success on that problem. It does not prove universal accuracy or show which internal or external methods were used.",
+      "A model may perform arithmetic without retrieving information from an external database."
+    ]
+  },
+  {
+    "id": "M01-L01-Q007",
+    "question": "An AI claims that a customer's package was delivered yesterday, but no shipping information was supplied. What is the best next action?",
+    "options": [
+      "Check the authorised delivery record before confirming the claim.",
+      "Tell the customer the package definitely arrived because the AI sounded confident.",
+      "Ask the AI to repeat its answer and treat agreement as proof.",
+      "Add more polite language to the claim and send it."
+    ],
+    "correct": 0,
+    "explanation": "The shipping claim requires evidence from an appropriate source. Without that evidence, it remains unverified.",
+    "feedback": [
+      "Correct. The shipping claim requires evidence from an appropriate source. Without that evidence, it remains unverified.",
+      "Confidence does not establish delivery status.",
+      "Repeating a claim does not independently verify it.",
+      "Polite wording cannot correct an unsupported factual statement."
+    ]
+  },
+  {
+    "id": "M01-L01-Q008",
+    "question": "What is an AI hallucination?",
+    "options": [
+      "A model producing several different but acceptable creative stories.",
+      "A model translating a sentence into another language.",
+      "A model asking for clarification when necessary information is missing.",
+      "A model generating inaccurate, fabricated or unsupported information as part of its answer."
+    ],
+    "correct": 3,
+    "explanation": "Hallucinations include invented references, incorrect dates and unsupported factual claims. A response may sound completely natural while containing these errors.",
+    "feedback": [
+      "Variation in creative writing is not necessarily a factual error.",
+      "Translation is an ordinary language-model capability.",
+      "Requesting clarification can help avoid unsupported assumptions.",
+      "Correct. Hallucinations include invented references, incorrect dates and unsupported factual claims. A response may sound completely natural while containing these errors."
+    ]
+  },
+  {
+    "id": "M01-L01-Q009",
+    "question": "Which statement about LLM reasoning is most accurate?",
+    "options": [
+      "Language models are incapable of solving any reasoning problem.",
+      "Language models can perform reasoning tasks, but their reasoning and conclusions may be incorrect.",
+      "Every answer produced by a language model is logically valid.",
+      "A model can reason correctly only when every answer has already been stored word for word."
+    ],
+    "correct": 1,
+    "explanation": "Modern LLMs can solve complex problems, compare alternatives and develop multi-step explanations. However, they can make logical mistakes or rely on unsupported assumptions.",
+    "feedback": [
+      "LLMs demonstrate useful reasoning abilities across many tasks.",
+      "Correct. Modern LLMs can solve complex problems, compare alternatives and develop multi-step explanations. However, they can make logical mistakes or rely on unsupported assumptions.",
+      "Generated reasoning must not automatically be assumed correct.",
+      "Models can solve new problems without retrieving an identical stored answer."
+    ]
+  },
+  {
+    "id": "M01-L01-Q010",
+    "question": "An AI assistant provides a website link as evidence for a factual claim. What should you do before treating the claim as verified?",
+    "options": [
+      "Accept the claim because any website link counts as proof.",
+      "Accept the claim if the website has a professional design.",
+      "Check that the source exists, is relevant and supports the specific claim.",
+      "Assume the claim is false because AI-generated answers cannot contain valid sources."
+    ],
+    "correct": 2,
+    "explanation": "Reliable verification requires evaluating the evidence itself. A citation may be incorrect, outdated, fabricated or unrelated to the statement.",
+    "feedback": [
+      "A link alone does not prove anything about the claim.",
+      "Professional design is not a reliable test of factual accuracy.",
+      "Correct. Reliable verification requires evaluating the evidence itself. A citation may be incorrect, outdated, fabricated or unrelated to the statement.",
+      "AI answers can contain valid, useful references. They still require appropriate review."
+    ]
+  },
+  {
+    "id": "M01-L01-Q011",
+    "question": "You ask an AI for the reason a customer cancelled a subscription. The cancellation record contains no reason. Which response is most responsible?",
+    "options": [
+      "\"The customer definitely cancelled because the service was too expensive.\"",
+      "\"The subscription is cancelled, but the available record does not state the reason.\"",
+      "\"The customer probably moved to another provider, so we should record that as the reason.\"",
+      "\"The model has enough general knowledge to identify the customer's personal reason.\""
+    ],
+    "correct": 1,
+    "explanation": "This response accurately separates the known cancellation status from the unknown cause. It does not invent a reason.",
+    "feedback": [
+      "There is no evidence that cost caused the cancellation.",
+      "Correct. This response accurately separates the known cancellation status from the unknown cause. It does not invent a reason.",
+      "A possible explanation should not be recorded as an established fact.",
+      "General model knowledge cannot establish an individual customer's undisclosed decision."
+    ]
+  },
+  {
+    "id": "M01-L01-Q012",
+    "question": "Two AI assistants independently produce the same answer to a historical question. What can you safely conclude from their agreement alone?",
+    "options": [
+      "The historical answer must be correct.",
+      "Both assistants have necessarily consulted an official historical archive.",
+      "The answer no longer requires factual verification.",
+      "The assistants agree, but their agreement alone does not establish factual correctness."
+    ],
+    "correct": 3,
+    "explanation": "Different models can share similar learned information and errors. Independent, relevant historical evidence is still needed to verify the claim.",
+    "feedback": [
+      "Agreement does not guarantee accuracy.",
+      "Similar answers do not demonstrate that a particular source was consulted.",
+      "Agreement may support further investigation but does not replace verification.",
+      "Correct. Different models can share similar learned information and errors. Independent, relevant historical evidence is still needed to verify the claim."
+    ]
+  },
+  {
+    "id": "M01-L01-Q013",
+    "question": "An AI product can use an authorised company database tool. Which statement is most accurate?",
+    "options": [
+      "The assistant may retrieve relevant records through the tool, but the results and final answer still require appropriate interpretation.",
+      "The language model automatically has access to every private database.",
+      "A connected tool guarantees that every generated answer will be correct.",
+      "The model must have memorised all current database records during training."
+    ],
+    "correct": 0,
+    "explanation": "Tools can give AI applications access to information or actions that the standalone model does not possess. Permissions, tool reliability, data quality and interpretation all remain important.",
+    "feedback": [
+      "Correct. Tools can give AI applications access to information or actions that the standalone model does not possess. Permissions, tool reliability, data quality and interpretation all remain important.",
+      "Access requires an appropriate connection and authorisation.",
+      "Tools and models can both produce or contribute to errors.",
+      "Retrieving current records through a tool is different from learning information during model training."
+    ]
+  },
+  {
+    "id": "M01-L01-Q014",
+    "question": "A company wants an AI to draft a customer message about a delayed refund. Which instruction best reduces unsupported claims?",
+    "options": [
+      "\"Give a convincing explanation, even if the records are incomplete.\"",
+      "\"Write confidently and do not mention uncertainty.\"",
+      "\"Use only the provided facts, do not invent the reason or arrival date, and explain that the status must be checked.\"",
+      "\"Assume the refund has been completed because most refunds are eventually completed.\""
+    ],
+    "correct": 2,
+    "explanation": "This instruction clearly defines the evidence boundary and directs the model not to invent missing details. The final output should still be reviewed.",
+    "feedback": [
+      "Convincing unsupported explanations can mislead customers.",
+      "Suppressing uncertainty can create false confidence.",
+      "Correct. This instruction clearly defines the evidence boundary and directs the model not to invent missing details. The final output should still be reviewed.",
+      "A general expectation does not establish an individual refund's status."
+    ]
+  },
+  {
+    "id": "M01-L01-Q015",
+    "question": "Which statement best describes responsible use of an LLM at work?",
+    "options": [
+      "Every AI output should be rejected because some models make mistakes.",
+      "Use the model for suitable tasks, review its output, and verify important claims using reliable evidence.",
+      "Trust any AI answer that is written in clear professional English.",
+      "Use the model without reviewing its output because training guarantees correctness."
+    ],
+    "correct": 1,
+    "explanation": "Responsible AI use combines useful model capabilities with human judgement. The level of review should match the task and the possible consequences of errors.",
+    "feedback": [
+      "Model limitations do not remove their practical value.",
+      "Correct. Responsible AI use combines useful model capabilities with human judgement. The level of review should match the task and the possible consequences of errors.",
+      "Professional wording does not prove factual accuracy.",
+      "Training cannot guarantee that every generated statement is correct."
+    ]
+  }
+]

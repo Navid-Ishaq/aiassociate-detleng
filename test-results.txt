@@ -1,24 +1,30 @@
 Built 213 pages + 404 in project root: 8 modules, 24 sections, 96 curriculum lessons + 96 Quick Reviews.
-✔ curriculum has the exact 8 × 3 × 4 structure and predictable IDs (279.8034ms)
-✔ every official title and objective is present on its module and lesson page (1.0635ms)
-✔ all internal links, asset references, and fragment targets resolve in generated files (346.7599ms)
-✔ all 213 direct routes return 200; no-slash lesson URLs redirect to working pages (181.6959ms)
-✔ unknown pages show a useful 404 with HTTP 404 status (8.9397ms)
-✔ every page has metadata, one H1, landmarks, unique IDs, and labelled inactive account dialog (6.8259ms)
-✔ ecosystem destinations have secure new-tab attributes and fixed footer order (1.6604ms)
-✔ script has no unresolved build tokens, credential service, analytics, or remote asset dependencies (2.3187ms)
-✔ sitemap, CNAME, and production output agree with the configured hostname (5.9505ms)
-✔ root publishing preserves source and does not require docs output (14.7379ms)
-✔ every page includes the standard footer navigation and learning message (2.4739ms)
-✔ Quick Review mirrors the exact curriculum without publishing Q&A content (1.6364ms)
-✔ Quick Review entry points and active section appear correctly across the site (2.4841ms)
-✔ review previous/next links stay in Quick Review and handle module boundaries (0.511ms)
-✔ direct Quick Review URLs redirect correctly; invalid review routes return 404 (10.213ms)
-ℹ tests 15
+✔ curriculum has the exact 8 × 3 × 4 structure and predictable IDs (283.731ms)
+✔ every official title and objective is present on its module and lesson page (1.012ms)
+✔ all internal links, asset references, and fragment targets resolve in generated files (413.5764ms)
+✔ all 213 direct routes return 200; no-slash lesson URLs redirect to working pages (180.4927ms)
+✔ unknown pages show a useful 404 with HTTP 404 status (4.4771ms)
+✔ every page has metadata, one H1, landmarks, unique IDs, and labelled inactive account dialog (6.6321ms)
+✔ ecosystem destinations have secure new-tab attributes and fixed footer order (1.6563ms)
+✔ script has no unresolved build tokens, credential service, analytics, or remote asset dependencies (2.3528ms)
+✔ sitemap, CNAME, and production output agree with the configured hostname (3.5151ms)
+✔ root publishing preserves source and does not require docs output (9.6594ms)
+✔ every page includes the standard footer navigation and learning message (2.6547ms)
+✔ Quick Review mirrors the exact curriculum without publishing Q&A content (1.5602ms)
+✔ Quick Review entry points and active section appear correctly across the site (2.8151ms)
+✔ review previous/next links stay in Quick Review and handle module boundaries (0.6041ms)
+✔ direct Quick Review URLs redirect correctly; invalid review routes return 404 (9.4164ms)
+✔ published lesson has the complete interactive teaching sequence and independent review status (1.3431ms)
+✔ lesson validator rejects curriculum drift, broken keys, duplicate options and incomplete feedback (6.1871ms)
+✔ source assessment text and keys survive rendering; JSON cannot break out of its script element (4.56ms)
+✔ recovered references are secure descriptive links without tracking parameters (0.3494ms)
+✔ lesson assets are local, served successfully, and collect no learner responses (4.8462ms)
+✔ lesson content preserves Unicode punctuation and has no replacement or mojibake characters (2.6479ms)
+ℹ tests 21
 ℹ suites 0
-ℹ pass 15
+ℹ pass 21
 ℹ fail 0
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 989.4694
+ℹ duration_ms 1055.181

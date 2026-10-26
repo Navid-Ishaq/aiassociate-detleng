@@ -1,0 +1,15 @@
+{
+ "$schema":"https://json-schema.org/draft/2020-12/schema",
+ "title":"Interactive lesson",
+ "type":"object",
+ "required":["id","title","objective","sections","simulations","references","classifications","safeResponseCorrect"],
+ "properties":{
+  "id":{"type":"string","pattern":"^M[0-9]{2}-L[0-9]{2}$"},
+  "title":{"type":"string","minLength":1},"objective":{"type":"string","minLength":1},
+  "sections":{"type":"array","minItems":1,"items":{"type":"object","required":["id","title","kind","blocks"],"properties":{"id":{"type":"string","pattern":"^[a-z][a-z0-9-]*$"},"title":{"type":"string"},"kind":{"enum":["theory","opening","simulation","reply","explanation-practice","challenges","checklist","recap","assessment","final-application"]},"blocks":{"type":"array","items":{"oneOf":[{"type":"object","required":["type","text"],"properties":{"type":{"const":"text"},"text":{"type":"string"}}},{"type":"object","required":["type","rows"],"properties":{"type":{"const":"table"},"rows":{"type":"array","minItems":1,"items":{"type":"array","items":{"type":"string"}}}}}]}},"challenges":{"type":"array"}}}},
+  "simulations":{"type":"array","items":{"type":"object","required":["id","cases"],"properties":{"id":{"type":"string"},"cases":{"type":"array","minItems":1,"items":{"type":"object","required":["title","context","options","correct","explanation","feedback","hint"],"properties":{"title":{"type":"string"},"context":{"type":"array","items":{"type":"string"}},"options":{"type":"array","minItems":3,"uniqueItems":true,"items":{"type":"string"}},"correct":{"type":"integer","minimum":0},"explanation":{"type":"string","minLength":1},"feedback":{"type":"array","items":{"type":"string","minLength":1}},"hint":{"type":"string"}}}}}}},
+  "references":{"type":"array","items":{"type":"object","required":["label","url"],"properties":{"label":{"type":"string"},"url":{"type":"string","format":"uri","pattern":"^https://"}}}},
+  "classifications":{"type":"array","items":{"type":"object","required":["id","answers"],"properties":{"id":{"type":"string"},"answers":{"type":"array","items":{"type":"string"}}}}},
+  "safeResponseCorrect":{"type":"integer","minimum":0}
+ }
+}

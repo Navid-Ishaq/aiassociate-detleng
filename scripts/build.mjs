@@ -2,6 +2,7 @@ import {readFile,writeFile,mkdir,copyFile} from 'node:fs/promises';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {site} from '../src/config.mjs';
+import {renderLesson} from '../src/lesson-system/render.mjs';
 import {layout,curriculum,modulePage,lessonPage,notFound,modulePath,lessonPath,esc,journey,breadcrumbs} from '../src/templates.mjs';
 import {home,about,privacy} from '../src/pages.mjs';
 import {reviewDirectory,reviewModule,reviewLesson,reviewModulePath,reviewLessonPath} from '../src/quick-review.mjs';
@@ -45,10 +46,9 @@ export async function build(){
   for(const s of m.sections) for(const l of s.lessons){
    let content;
    if(l.status==='published'){
-    // Publishing is explicit: a reviewed HTML file must exist or the build fails.
-    const approved=await readFile(path.join(root,'src/lessons',`${l.id}.html`),'utf8');
-    if(!approved.trim())throw new Error(`Published lesson is empty: ${l.id}`);
-    content=`<article class="container narrow editorial">${breadcrumbs([['Curriculum','/learn/'],[m.title,modulePath(m)],[s.title,modulePath(m)+'#section-'+s.id.toLowerCase()],[l.title]])}<span class="eyebrow">${esc(l.id)}</span><h1>${esc(l.title)}</h1><p class="intro-lead">${esc(l.objective)}</p>${approved}<a class="inline-link" href="${modulePath(m)}">Back to Module</a></article>`;
+    const lesson=await readJSON(path.join(root,'src/lessons',l.id,'lesson.json'));
+    const questions=await readJSON(path.join(root,'src/lessons',l.id,'questions.json'));
+    content=renderLesson(m,s,l,lesson,questions);
    }else content=lessonPage(m,s,l);
    await page(lessonPath(l),{title:l.title,description:`${l.id}: ${l.objective}${l.status==='coming-soon'?' This lesson is coming soon.':''}`,content,active:'learn'});
   }
@@ -63,6 +63,8 @@ export async function build(){
  await page('/about/',{title:'About the learning journey',content:about(),active:'about'});
  await page('/privacy/',{title:'Privacy',content:privacy()});
  await page('/404.html',{title:'Page not found',content:notFound(),noindex:true});
+ await copyFile(path.join(root,'src/lesson-system/styles.css'),path.join(out,'assets/lesson.css'));
+ await copyFile(path.join(root,'src/lesson-system/runtime.js'),path.join(out,'assets/lesson.js'));
  await copyFile(path.join(root,'src/styles.css'),path.join(out,'assets/styles.css'));
  await copyFile(path.join(root,'src/data/curriculum.json'),path.join(out,'assets/curriculum.json'));
  await writeFile(path.join(out,'assets/app.js'),(await readFile(path.join(root,'src/app.js'),'utf8')).replace('__JOURNEY__',JSON.stringify(journey)));

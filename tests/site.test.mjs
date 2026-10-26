@@ -25,9 +25,16 @@ test('every official title and objective is present on its module and lesson pag
    for(const l of s.lessons){
     const html=pages.get(lessonPath(l));
     assert.ok(module.includes(esc(l.title)),l.id);assert.ok(module.includes(esc(l.objective)),l.id);
-    assert.ok(html.includes(`<h2>${esc(l.title)}</h2>`),l.id);assert.ok(html.includes(esc(l.objective)),l.id);
-    assert.ok(html.includes('This Lesson Is<br><em>Coming Soon</em>'),l.id);
-    assert.equal(l.status,'coming-soon');
+    assert.ok(html.includes(esc(l.objective)),l.id);
+    if(l.id==='M01-L01'){
+     assert.equal(l.status,'published');assert.ok(html.includes('data-interactive-lesson'));
+     assert.ok(html.includes(`<h1>${esc(l.title)}</h1>`));
+     assert.ok(!html.includes('This Lesson Is<br><em>Coming Soon</em>'));
+    }else{
+     assert.ok(html.includes(`<h2>${esc(l.title)}</h2>`),l.id);
+     assert.ok(html.includes('This Lesson Is<br><em>Coming Soon</em>'),l.id);
+     assert.equal(l.status,'coming-soon');
+    }
    }
   }
  }
@@ -149,4 +156,54 @@ test('direct Quick Review URLs redirect correctly; invalid review routes return 
  const redirect=await fetch(base+'/quick-review/m03/l10',{redirect:'manual'});assert.equal(redirect.status,301);assert.equal(redirect.headers.get('location'),'/quick-review/m03/l10/');
  const response=await fetch(base+'/quick-review/m03/l10');assert.equal(response.status,200);assert.match(await response.text(),/Quick Review<br><em>Coming Soon/);
  assert.equal((await fetch(base+'/quick-review/m09/l01/')).status,404);
+});
+
+test('published lesson has the complete interactive teaching sequence and independent review status',async()=>{
+ const html=pages.get('/learn/m01/l01/');
+ assert.equal((html.match(/class="learning-section"/g)||[]).length,16);
+ assert.equal((html.match(/data-simulation="/g)||[]).length,2);
+ assert.equal((html.match(/class="challenge"/g)||[]).length,5);
+ for(const marker of ['data-safe-response','data-quiz-stage','data-flashcards','data-work-check','data-final-check','data-finish-lesson','data-timer-start','data-reset-lesson'])assert.ok(html.includes(marker),marker);
+ const data=JSON.parse(html.match(/<script type="application\/json" id="lesson-data">([\s\S]*?)<\/script>/)[1]);
+ assert.equal(data.questions.length,15);assert.deepEqual(data.simulations.map(s=>s.cases.length),[3,3]);
+ assert.ok(!pages.get('/quick-review/m01/l01/').includes('data-quiz-stage'));
+ assert.ok(pages.get('/quick-review/m01/l01/').includes('QUICK REVIEW IN PREPARATION'));
+ assert.ok(pages.get('/learn/m01/').includes('Open lesson'));assert.ok(pages.get('/').includes('Your first interactive lesson is ready.'));
+});
+test('lesson validator rejects curriculum drift, broken keys, duplicate options and incomplete feedback',async()=>{
+ const {validateLesson}=await import('../src/lesson-system/render.mjs');
+ const data=JSON.parse(await readFile(path.join(root,'src/lessons/M01-L01/lesson.json'),'utf8'));
+ const questions=JSON.parse(await readFile(path.join(root,'src/lessons/M01-L01/questions.json'),'utf8'));
+ const l=built.modules[0].sections[0].lessons[0];validateLesson(data,questions,l);
+ for(const mutate of [d=>d.title='Wrong title',d=>d.sections[1].id=d.sections[0].id,d=>d.simulations[0].cases[0].correct=99,d=>d.classifications[0].answers[0]='verification',d=>d.references[0].url='javascript:alert(1)']){const bad=structuredClone(data);mutate(bad);assert.throws(()=>validateLesson(bad,questions,l));}
+ for(const mutate of [q=>q[0].correct=-1,q=>q[0].options[1]=q[0].options[0],q=>q[0].feedback.pop(),q=>q[1].id=q[0].id]){const bad=structuredClone(questions);mutate(bad);assert.throws(()=>validateLesson(data,bad,l));}
+});
+test('source assessment text and keys survive rendering; JSON cannot break out of its script element',async()=>{
+ const {renderLesson}=await import('../src/lesson-system/render.mjs');
+ const data=JSON.parse(await readFile(path.join(root,'src/lessons/M01-L01/lesson.json'),'utf8'));
+ const questions=JSON.parse(await readFile(path.join(root,'src/lessons/M01-L01/questions.json'),'utf8'));
+ const html=pages.get('/learn/m01/l01/');
+ assert.deepEqual(questions.map(q=>q.correct),[1,2,0,3,1,2,0,3,1,2,1,3,0,2,1]);
+ for(const q of questions){assert.ok(html.includes(esc(q.question)));assert.ok(html.includes(esc(q.explanation)));for(const feedback of q.feedback)assert.ok(html.includes(esc(feedback)));}
+ const injected=structuredClone(questions);injected[0].question='</script><script>alert("example")</script>';
+ const m=built.modules[0],s=m.sections[0],l=s.lessons[0],out=renderLesson(m,s,l,data,injected);
+ assert.ok(!out.includes(injected[0].question));const json=out.match(/id="lesson-data">([\s\S]*?)<\/script>/)[1];assert.equal(JSON.parse(json).questions[0].question,injected[0].question);
+});
+test('recovered references are secure descriptive links without tracking parameters',()=>{
+ const html=pages.get('/learn/m01/l01/');
+ for(const url of ['https://developers.google.com/machine-learning/crash-course/llm/transformers','https://learn.microsoft.com/en-us/agent-framework/journey/llm-fundamentals','https://help.openai.com/en/articles/8313428-does-chatgpt-tell-the-truth'])assert.ok(html.includes(`href="${url}" target="_blank" rel="noopener noreferrer"`));
+ assert.ok(!html.includes('utm_source'));assert.ok(!html.includes('Content version'));assert.ok(!html.includes('Pending editorial approval'));
+});
+test('lesson assets are local, served successfully, and collect no learner responses',async()=>{
+ for(const name of ['lesson.css','lesson.js']){const r=await fetch(base+'/assets/'+name);assert.equal(r.status,200);}
+ const js=await readFile(path.join(root,'assets/lesson.js'),'utf8');assert.ok(!/fetch\(|XMLHttpRequest|sendBeacon|localStorage|sessionStorage|document\.cookie|eval\(/.test(js));
+ assert.ok(pages.get('/learn/m01/l01/').includes('Your writing stays on this page. It is not sent or automatically graded.'));
+});
+
+test('lesson content preserves Unicode punctuation and has no replacement or mojibake characters',async()=>{
+ const data=await readFile(path.join(root,'src/lessons/M01-L01/lesson.json'),'utf8');
+ assert.ok(data.includes('Case 1 — Travelling'));
+ assert.ok(data.includes('€85'));
+ assert.ok(!/\uFFFD|â€|â‚|Ã¢/.test(data));
+ const schema=JSON.parse((await readFile(path.join(root,'src/lesson-system/lesson.schema.json'),'utf8')).replace(/^\uFEFF/,''));assert.equal(schema.type,'object');
 });

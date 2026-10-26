@@ -28,12 +28,12 @@ npm run preview
 - A working, explicitly simulated summary-check demo with three answer paths, evidence-based feedback, an improved summary, and reset.
 - Curriculum directory with browser-local search across modules, sections, lesson IDs, titles, and objectives.
 - 8 module pages, 24 sections, and all 96 official lessons.
-- 96 real, directly addressable Coming Soon lesson pages, with objectives, breadcrumbs, previous/next navigation, and return actions.
+- 95 real, directly addressable Coming Soon lesson pages plus the complete interactive M01-L01 lesson, with objectives, breadcrumbs, previous/next navigation, and return actions.
 - About, Privacy, custom 404, sitemap, metadata, local icon assets, and secure ecosystem links.
 - Header/footer Login / Create Account buttons. The accessible information modal accepts no credentials. Continue Free closes it. Authentication is inactive.
 - Responsive layouts, visible keyboard focus, native controls, skip link, dialog focus handling, reduced-motion styles, and a readable fallback when JavaScript is unavailable.
 
-There are 213 content pages plus the 404 page, including 105 Quick Review directory/module/lesson pages. Lessons, labs, quizzes, flashcards, accounts, AI Mentor, saved progress, and live chat are not presented as available.
+There are 213 content pages plus the 404 page, including 105 Quick Review directory/module/lesson pages. M01-L01 includes simulations, practice, quizzes and flashcards. The remaining lessons and all Quick Reviews are Coming Soon. Accounts, AI Mentor, saved progress and live chat remain inactive.
 
 ## Project map
 
@@ -67,14 +67,8 @@ The site expects to run at a domain root. A default repository-subfolder URL wou
 
 ## Adding an approved lesson later
 
-1. Write and review the lesson content, expected answers, explanations, and simulations.
-2. Put its trusted editorial HTML in `src/lessons/M01-L01.html` (use the actual ID). Supply content sections only; the build supplies the heading, objective, breadcrumb, and surrounding layout.
-3. Change only that lesson's `status` from `coming-soon` to `published` in the curriculum data.
-4. Update general availability copy to reflect the release, then rebuild and review all affected pages.
+Follow [LESSON_AUTHORING_GUIDE.md](LESSON_AUTHORING_GUIDE.md). The working lesson uses `src/lessons/M01-L01/lesson.json` and `questions.json`, rendered by `src/lesson-system/`. The build validates curriculum identity and answer-bank structure. Quiz and flashcards share one bank. Update the curriculum availability only after review and testing. New interaction types may require a shared component extension.
 
-The build fails if a published lesson's HTML file is missing or empty. The module's lesson link and search result show its individual availability. Routes stay the same. This mechanism does not configure accounts or external services. Publishing untrusted user HTML is outside this site's scope.
-
-Phase 1 acceptance tests deliberately expect all 96 lessons to be Coming Soon. Update those release assertions when an intentionally approved lesson is introduced.
 
 ## Local browser QA fixtures
 
