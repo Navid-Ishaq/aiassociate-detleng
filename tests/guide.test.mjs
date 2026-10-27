@@ -31,8 +31,8 @@ test('Guide request IDs prevent duplicate generation during pending replies and 
  const send=body=>fetch(base+'/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
  try{const [a,b]=await Promise.all([send(input()),send(input())]);assert.equal(a.status,200);assert.equal(b.status,200);assert.equal(calls,1);assert.equal((await a.json()).reply,'Synthetic test reply.');assert.equal((await send(input())).status,200);assert.equal(calls,1);assert.equal((await send(input({message:'A different message with the same ID'}))).status,409);assert.equal(calls,1);}finally{await stop(server);}
 });
-test('public Guide configuration contains no live service or credentials',async()=>{
- const config=JSON.parse((await readFile(new URL('../src/guide-system/config.json',import.meta.url),'utf8')).replace(/^\uFEFF/,''));assert.equal(config.enabled,false);assert.equal(config.apiBase,'');assert.ok(!JSON.stringify(config).includes('API_KEY'));
+test('public Guide configuration uses the verified HTTPS service without credentials',async()=>{
+ const config=JSON.parse((await readFile(new URL('../src/guide-system/config.json',import.meta.url),'utf8')).replace(/^\uFEFF/,''));assert.equal(config.enabled,true);assert.equal(safeApiBase(config.apiBase),'https://aiassociate-guide.onrender.com');assert.ok(!JSON.stringify(config).includes('API_KEY'));
 });
 
 test('Guide sends bounded recent history while retaining the newest complete messages',()=>{
