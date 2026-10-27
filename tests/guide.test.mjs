@@ -49,3 +49,16 @@ test('Guide prepares editable Q&A and topic drafts without replacing unsent work
  assert.equal(preserveDraft('',reviewDraft(q)),reviewDraft(q));
  assert.equal(reviewDraft(null),'');assert.equal(topicDraft(null),'');
 });
+
+test('Groq adapter uses private auth, bounded approved context, and no automatic retry',async()=>{
+ const {createGroqGenerator,learningContext}=await import('../guide-server/groq.mjs');
+ assert.equal(createGroqGenerator({}),null);
+ const context=await resolveGuideContext({lessonId:'M01-L01',reviewId:'M01-L01-R002'});
+ let calls=0,body;
+ const generate=createGroqGenerator({apiKey:'test-private-key',maxDailyRequests:1,fetchImpl:async(url,options)=>{calls++;assert.equal(url,'https://api.groq.com/openai/v1/chat/completions');assert.equal(options.headers.Authorization,'Bearer test-private-key');body=JSON.parse(options.body);return {ok:true,json:async()=>({choices:[{message:{content:'A model predicts tokens.'}}]})};}});
+ assert.equal(await generate({message:'Explain tokens',history:[],context}),'A model predicts tokens.');
+ assert.ok(body.messages[1].content.includes(context.selectedReview.question));assert.equal(body.stream,false);assert.equal(body.max_completion_tokens,900);
+ await assert.rejects(()=>generate({message:'Again',history:[],context}));assert.equal(calls,1);
+ const upcoming=learningContext(await resolveGuideContext({lessonId:'M01-L02'}),'Explain');assert.equal(upcoming.contentAvailable,false);assert.equal(upcoming.lesson.title,'Tokens and Tokenization');
+ let failures=0;const fail=createGroqGenerator({apiKey:'test',fetchImpl:async()=>{failures++;return {ok:false};}});await assert.rejects(()=>fail({message:'Explain',history:[],context}));assert.equal(failures,1);
+});

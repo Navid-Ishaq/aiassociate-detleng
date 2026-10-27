@@ -1,4 +1,5 @@
 import http from 'node:http';
+import {createGroqGenerator} from './groq.mjs';
 import {createHash} from 'node:crypto';
 import {fileURLToPath} from 'node:url';
 import path from 'node:path';
@@ -27,4 +28,11 @@ export function createGuideServer({generate=null,allowedOrigins=['http://127.0.0
   record.promise=(async()=>{try{const context=await resolveContext(input.context);const text=await generate({message:input.message,history:input.history,context});if(typeof text!=='string'||!text.trim()||text.length>6000)throw Error('Invalid response');return {status:200,body:{requestId:input.requestId,reply:text}};}catch{return {status:503,body:{code:'GUIDE_UNAVAILABLE',requestId:input.requestId}};}finally{record.done=true;record.expires=Date.now()+120000;}})();requests.set(input.requestId,record);const result=await record.promise;reply(result.status,result.body);
  });
 }
-if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url)){const port=Number(process.env.PORT||4319);createGuideServer({allowedOrigins:(process.env.ALLOWED_ORIGINS||'http://127.0.0.1:4173,http://localhost:4173,https://www.aiassociate.detleng.com').split(',')}).listen(port,'127.0.0.1',()=>console.log(`Guide scaffold: http://127.0.0.1:${port} — live AI disabled`));}
+if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url)){
+ const port=Number(process.env.PORT||4319),host=process.env.HOST||'0.0.0.0';
+ const allowedOrigins=(process.env.ALLOWED_ORIGINS||'http://127.0.0.1:4173,http://localhost:4173,https://www.aiassociate.detleng.com').split(',').map(s=>s.trim()).filter(Boolean);
+ const maxDailyRequests=Number(process.env.GUIDE_DAILY_REQUEST_LIMIT||200),maxConcurrent=Number(process.env.GUIDE_MAX_CONCURRENT||2);
+ if(!Number.isInteger(maxDailyRequests)||maxDailyRequests<1||!Number.isInteger(maxConcurrent)||maxConcurrent<1)throw Error('Invalid Guide limits');
+ const generate=process.env.GUIDE_ENABLED==='true'?createGroqGenerator({apiKey:process.env.GROQ_API_KEY,model:process.env.GROQ_MODEL||'llama-3.3-70b-versatile',maxDailyRequests,maxConcurrent}):null;
+ createGuideServer({generate,allowedOrigins}).listen(port,host,()=>console.log(`Guide listening on ${host}:${port}; provider ${generate?'configured':'disabled'}`));
+}

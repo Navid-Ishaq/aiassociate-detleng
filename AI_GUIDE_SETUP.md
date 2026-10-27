@@ -1,3 +1,7 @@
+# Current connection stage
+
+The Groq adapter is now implemented locally. See [Render setup](RENDER_GUIDE_SETUP.md) for current deployment fields and environment variables. No live deployment or provider call has been verified. Public AI remains disabled. The earlier scaffold notes below describe the original structure.
+
 # AI Guide structure and next connection stage
 
 The website now has one shared AI Guide panel on all routes, plus an Ask AI Guide button on every available Quick Review card. Live AI is disabled. Nothing has been deployed or connected to Render, Mastra or Groq.
