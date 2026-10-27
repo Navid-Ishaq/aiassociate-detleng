@@ -43,8 +43,8 @@ test('Guide sends bounded recent history while retaining the newest complete mes
 
 test('Guide prepares editable Q&A and topic drafts without replacing unsent work',()=>{
  const q={question:'How does an LLM work?',answer:'It predicts tokens.'};
- assert.equal(reviewDraft(q),'Please explain this question and answer in simple English, with a practical example.\n\nCustomer: How does an LLM work?\nYour response: It predicts tokens.');
- assert.equal(topicDraft({title:'Tokens and Tokenization'}),'Explain Tokens and Tokenization in simple English. Keep it brief and include one example.');
+ assert.equal(reviewDraft(q),'Please explain this simply, with a practical example.\n\nCustomer: How does an LLM work?\nYour response: It predicts tokens.');
+ assert.equal(topicDraft({title:'Tokens and Tokenization'}),'Explain Tokens and Tokenization simply, with a practical example.');
  assert.equal(preserveDraft('My unfinished question',reviewDraft(q)),'My unfinished question');
  assert.equal(preserveDraft('',reviewDraft(q)),reviewDraft(q));
  assert.equal(reviewDraft(null),'');assert.equal(topicDraft(null),'');

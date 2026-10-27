@@ -18,19 +18,17 @@ if(panel){
   const links=element('div','guide-resource-links'),l=lesson();
   for(const [label,url] of l?[[l.status==='published'?'Open full lesson':'View lesson outline',l.lessonUrl],[l.reviewStatus==='published'?'Open Quick Review':'View review outline',l.reviewUrl]]:[['Explore curriculum','/learn/'],['Explore Quick Review','/quick-review/']]){const a=element('a','',label);a.href=url;links.append(a);}intro.append(links);log.append(intro);
   for(const message of t.messages){const bubble=element('div','guide-message guide-'+message.role);bubble.append(element('strong','',message.role==='user'?'You':message.role==='assistant'?'AI Guide':'Notice'),element('p','',message.content));if(message.retry){const button=element('button','guide-retry','Try again');button.type='button';button.disabled=t.pending;button.onclick=()=>{composer.focus({preventScroll:true});submit(message.retry);};bubble.append(button);}log.append(bubble);}
-  const box=$('#guide-context'),q=reviewItem();box.replaceChildren();box.hidden=!q;
-  if(q){box.append(element('strong','','Selected Q&A'));const details=document.createElement('details'),summary=element('summary','',q.question);details.append(summary,element('p','',q.answer));box.append(details);}
   topic.value=active.lessonId||'';updateControls();latest();
  }
  async function boot(){if(bootPromise)return bootPromise;bootPromise=Promise.all([fetch('/assets/guide-catalog.json').then(r=>{if(!r.ok)throw Error('Lesson list unavailable');return r.json();}),fetch('/assets/guide-config.json').then(r=>{if(!r.ok)throw Error('Guide unavailable');return r.json();})]).then(([data,settings])=>{catalog=data;config={...settings,apiBase:safeApiBase(settings.apiBase)};if(config.enabled&&!config.apiBase)config.enabled=false;topic.replaceChildren(new Option('Whole curriculum · 96 lessons',''));for(const m of catalog.modules){const group=document.createElement('optgroup');group.label=`${m.id} · ${m.title}`;catalog.lessons.filter(l=>l.moduleId===m.id).forEach(l=>group.append(new Option(`${l.id} · ${l.title}${l.status==='published'?'':' · Coming soon'}`,l.id)));topic.append(group);}return true;}).catch(()=>{bootPromise=null;config={enabled:false,apiBase:''};$('#guide-connection').textContent='The lesson list could not load. The curriculum links still work.';return false;});return bootPromise;}
  async function open(context){
-  panel.hidden=false;launcher.setAttribute('aria-expanded','true');composer.focus({preventScroll:true});
+  panel.hidden=false;document.body.classList.add('guide-open');launcher.setAttribute('aria-expanded','true');composer.focus({preventScroll:true});
   const ok=await boot();if(context&&ok){thread().draft=composer.value;active={lessonId:context.lessonId||null,reviewId:context.reviewId||null};if(active.lessonId&&!lesson())active={lessonId:null,reviewId:null};if(active.reviewId){const q=reviewItem();if(q)thread().review=q;else active.reviewId=null;}thread().draft=preserveDraft(thread().draft,reviewDraft(reviewItem()));composer.value=thread().draft;}
   else if(ok&&!threads.size){const match=location.pathname.match(/^\/(?:learn|quick-review)\/(m\d{2})\/(l\d{2})\//i);if(match){active={lessonId:`${match[1]}-${match[2]}`.toUpperCase(),reviewId:null};}}
   render();
  }
  launcher.addEventListener('click',()=>panel.hidden?open():close());
- function close(){panel.hidden=true;launcher.setAttribute('aria-expanded','false');launcher.focus({preventScroll:true});}
+ function close(){panel.hidden=true;document.body.classList.remove('guide-open');launcher.setAttribute('aria-expanded','false');launcher.focus({preventScroll:true});}
  $('#guide-close').onclick=close;panel.addEventListener('keydown',e=>{if(e.key==='Escape'){e.stopPropagation();close();}});
  document.addEventListener('click',e=>{const button=e.target.closest('[data-guide-lesson]');if(button)open({lessonId:button.dataset.guideLesson,reviewId:button.dataset.guideReview||null});});
  function select(context){thread().draft=composer.value;active=context;thread().draft=preserveDraft(thread().draft,topicDraft(lesson()));composer.value=thread().draft;render();composer.focus({preventScroll:true});}
