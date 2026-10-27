@@ -62,3 +62,8 @@ test('Groq adapter uses private auth, bounded approved context, and no automatic
  const upcoming=learningContext(await resolveGuideContext({lessonId:'M01-L02'}),'Explain');assert.equal(upcoming.contentAvailable,false);assert.equal(upcoming.lesson.title,'Tokens and Tokenization');
  let failures=0;const fail=createGroqGenerator({apiKey:'test',fetchImpl:async()=>{failures++;return {ok:false};}});await assert.rejects(()=>fail({message:'Explain',history:[],context}));assert.equal(failures,1);
 });
+
+test('Guide request IDs work on HTTP without randomUUID',async()=>{
+ const {createRequestId}=await import('../src/guide-system/protocol.js');
+ const id=createRequestId({getRandomValues:array=>{array.fill(7);return array;}});assert.match(id,/^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/);assert.equal(validateChatInput(input({requestId:id})).requestId,id);assert.equal(createRequestId({randomUUID:()=> 'test-uuid'}),'test-uuid');
+});

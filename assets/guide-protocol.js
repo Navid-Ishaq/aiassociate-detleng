@@ -19,3 +19,10 @@ export function limitHistory(messages){const recent=messages.filter(m=>['user','
 export function reviewDraft(item){return item ? `Please explain this simply, with a practical example.\n\nCustomer: ${item.question}\nYour response: ${item.answer}` : '';}
 export function topicDraft(lesson){return lesson ? `Explain ${lesson.title} simply, with a practical example.` : '';}
 export function preserveDraft(existing,suggested){return existing.trim() ? existing : suggested;}
+
+export function createRequestId(cryptoApi=globalThis.crypto){
+ if(typeof cryptoApi?.randomUUID==='function')return cryptoApi.randomUUID();
+ if(typeof cryptoApi?.getRandomValues!=='function')throw Error('Secure random source unavailable');
+ const bytes=cryptoApi.getRandomValues(new Uint8Array(16));bytes[6]=(bytes[6]&15)|64;bytes[8]=(bytes[8]&63)|128;
+ const hex=Array.from(bytes,b=>b.toString(16).padStart(2,'0')).join('');return `${hex.slice(0,8)}-${hex.slice(8,12)}-${hex.slice(12,16)}-${hex.slice(16,20)}-${hex.slice(20)}`;
+}

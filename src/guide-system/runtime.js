@@ -1,4 +1,4 @@
-import {contextKey,safeApiBase,shouldSendOnEnter,limitHistory,reviewDraft,topicDraft,preserveDraft} from './guide-protocol.js';
+import {contextKey,safeApiBase,shouldSendOnEnter,limitHistory,reviewDraft,topicDraft,preserveDraft,createRequestId} from './guide-protocol.js';
 const panel=document.getElementById('guide-panel');
 if(panel){
  const $=s=>document.querySelector(s),launcher=$('#guide-launcher'),composer=$('#guide-message'),send=$('#guide-send'),log=$('#guide-conversation'),topic=$('#guide-topic');
@@ -42,7 +42,7 @@ if(panel){
  async function submit(retry=null,suggestion=null){
   const t=thread(),key=contextKey(active),context={...active};if(t.pending)return;
   const text=(retry?.message||suggestion||composer.value).trim();if(!text||text.length>2000)return;
-  const request=retry||{requestId:crypto.randomUUID(),message:text,context,history:limitHistory(t.messages)};
+  const request=retry||{requestId:createRequestId(),message:text,context,history:limitHistory(t.messages)};
   t.pending=true;if(retry)t.messages=t.messages.filter(m=>m.retry?.requestId!==retry.requestId);if(!retry)t.messages.push({role:'user',content:text});composer.value='';t.draft='';
   const notice={role:'notice',content:'Connecting… The first connection may take a little longer.'};t.messages.push(notice);render();
   const refresh=()=>{if(contextKey(active)===key)render();};
