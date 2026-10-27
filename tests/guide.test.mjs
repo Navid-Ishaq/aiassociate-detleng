@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
-import {validateChatInput,shouldSendOnEnter,safeApiBase,contextKey,limitHistory} from '../src/guide-system/protocol.js';
+import {validateChatInput,shouldSendOnEnter,safeApiBase,contextKey,limitHistory,reviewDraft,topicDraft,preserveDraft} from '../src/guide-system/protocol.js';
 import {resolveGuideContext} from '../guide-server/context.mjs';
 import {createGuideServer} from '../guide-server/server.mjs';
 const input=(overrides={})=>({requestId:'request-test-0001',context:{lessonId:'M01-L01',reviewId:'M01-L01-R002'},message:'Explain this simply.',history:[],...overrides});
@@ -39,4 +39,13 @@ test('Guide sends bounded recent history while retaining the newest complete mes
  const old=Array.from({length:12},(_,i)=>({role:i%2?'assistant':'user',content:String(i)+'x'.repeat(2999)}));
  const recent=limitHistory(old);assert.ok(recent.length<=10);assert.ok(recent.reduce((n,m)=>n+m.content.length,0)<=12000);assert.equal(recent.at(-1).content,old.at(-1).content);
  assert.throws(()=>validateChatInput(input({history:Array(3).fill({role:'assistant',content:'x'.repeat(5000)})})));
+});
+
+test('Guide prepares editable Q&A and topic drafts without replacing unsent work',()=>{
+ const q={question:'How does an LLM work?',answer:'It predicts tokens.'};
+ assert.equal(reviewDraft(q),'Please explain this question and answer in simple English, with a practical example.\n\nCustomer: How does an LLM work?\nYour response: It predicts tokens.');
+ assert.equal(topicDraft({title:'Tokens and Tokenization'}),'Explain Tokens and Tokenization in simple English. Keep it brief and include one example.');
+ assert.equal(preserveDraft('My unfinished question',reviewDraft(q)),'My unfinished question');
+ assert.equal(preserveDraft('',reviewDraft(q)),reviewDraft(q));
+ assert.equal(reviewDraft(null),'');assert.equal(topicDraft(null),'');
 });

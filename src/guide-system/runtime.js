@@ -1,4 +1,4 @@
-import {contextKey,safeApiBase,shouldSendOnEnter,limitHistory} from './guide-protocol.js';
+import {contextKey,safeApiBase,shouldSendOnEnter,limitHistory,reviewDraft,topicDraft,preserveDraft} from './guide-protocol.js';
 const panel=document.getElementById('guide-panel');
 if(panel){
  const $=s=>document.querySelector(s),launcher=$('#guide-launcher'),composer=$('#guide-message'),send=$('#guide-send'),log=$('#guide-conversation'),topic=$('#guide-topic');
@@ -25,7 +25,7 @@ if(panel){
  async function boot(){if(bootPromise)return bootPromise;bootPromise=Promise.all([fetch('/assets/guide-catalog.json').then(r=>{if(!r.ok)throw Error('Lesson list unavailable');return r.json();}),fetch('/assets/guide-config.json').then(r=>{if(!r.ok)throw Error('Guide unavailable');return r.json();})]).then(([data,settings])=>{catalog=data;config={...settings,apiBase:safeApiBase(settings.apiBase)};if(config.enabled&&!config.apiBase)config.enabled=false;topic.replaceChildren(new Option('Whole curriculum · 96 lessons',''));for(const m of catalog.modules){const group=document.createElement('optgroup');group.label=`${m.id} · ${m.title}`;catalog.lessons.filter(l=>l.moduleId===m.id).forEach(l=>group.append(new Option(`${l.id} · ${l.title}${l.status==='published'?'':' · Coming soon'}`,l.id)));topic.append(group);}return true;}).catch(()=>{bootPromise=null;config={enabled:false,apiBase:''};$('#guide-connection').textContent='The lesson list could not load. The curriculum links still work.';return false;});return bootPromise;}
  async function open(context){
   panel.hidden=false;launcher.setAttribute('aria-expanded','true');composer.focus({preventScroll:true});
-  const ok=await boot();if(context&&ok){thread().draft=composer.value;active={lessonId:context.lessonId||null,reviewId:context.reviewId||null};if(active.lessonId&&!lesson())active={lessonId:null,reviewId:null};if(active.reviewId){const q=reviewItem();if(q)thread().review=q;else active.reviewId=null;}composer.value=thread().draft;}
+  const ok=await boot();if(context&&ok){thread().draft=composer.value;active={lessonId:context.lessonId||null,reviewId:context.reviewId||null};if(active.lessonId&&!lesson())active={lessonId:null,reviewId:null};if(active.reviewId){const q=reviewItem();if(q)thread().review=q;else active.reviewId=null;}thread().draft=preserveDraft(thread().draft,reviewDraft(reviewItem()));composer.value=thread().draft;}
   else if(ok&&!threads.size){const match=location.pathname.match(/^\/(?:learn|quick-review)\/(m\d{2})\/(l\d{2})\//i);if(match){active={lessonId:`${match[1]}-${match[2]}`.toUpperCase(),reviewId:null};}}
   render();
  }
@@ -33,7 +33,7 @@ if(panel){
  function close(){panel.hidden=true;launcher.setAttribute('aria-expanded','false');launcher.focus({preventScroll:true});}
  $('#guide-close').onclick=close;panel.addEventListener('keydown',e=>{if(e.key==='Escape'){e.stopPropagation();close();}});
  document.addEventListener('click',e=>{const button=e.target.closest('[data-guide-lesson]');if(button)open({lessonId:button.dataset.guideLesson,reviewId:button.dataset.guideReview||null});});
- function select(context){thread().draft=composer.value;active=context;composer.value=thread().draft;render();}
+ function select(context){thread().draft=composer.value;active=context;thread().draft=preserveDraft(thread().draft,topicDraft(lesson()));composer.value=thread().draft;render();composer.focus({preventScroll:true});}
  topic.onchange=()=>select({lessonId:topic.value||null,reviewId:null});$('#guide-general').onclick=()=>select({lessonId:null,reviewId:null});
  $('#guide-new-chat').onclick=()=>{const t=thread();if(t.pending){$('#guide-connection').textContent='Wait for the current reply before starting a new conversation.';return;}threads.delete(contextKey(active));composer.value='';render();composer.focus({preventScroll:true});};
  composer.addEventListener('input',()=>{thread().draft=composer.value;updateControls();});composer.addEventListener('compositionstart',()=>composing=true);composer.addEventListener('compositionend',()=>composing=false);

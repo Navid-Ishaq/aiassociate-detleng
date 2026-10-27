@@ -15,3 +15,7 @@ export function safeApiBase(value){if(!value)return '';const u=new URL(value);if
 export const shouldSendOnEnter=(event,composing=false)=>event.key==='Enter'&&!event.shiftKey&&!event.isComposing&&!composing&&event.keyCode!==229;
 
 export function limitHistory(messages){const recent=messages.filter(m=>['user','assistant'].includes(m.role)).slice(-MAX_HISTORY).map(({role,content})=>({role,content}));while(recent.reduce((n,m)=>n+m.content.length,0)>12000)recent.shift();return recent;}
+
+export function reviewDraft(item){return item ? `Please explain this question and answer in simple English, with a practical example.\n\nCustomer: ${item.question}\nYour response: ${item.answer}` : '';}
+export function topicDraft(lesson){return lesson ? `Explain ${lesson.title} in simple English. Keep it brief and include one example.` : '';}
+export function preserveDraft(existing,suggested){return existing.trim() ? existing : suggested;}
