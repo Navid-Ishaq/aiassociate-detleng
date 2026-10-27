@@ -1,0 +1,304 @@
+<details class="lab-learning"><summary>Phase 1 — Understand How APIs Work</summary>
+<h3 id="1-what-is-an-api">1. What is an API?</h3>
+<p><strong>API</strong> stands for <strong>Application Programming Interface</strong>. It is a defined way for one software application to communicate with another.</p>
+<p>Think of a restaurant. A customer places an order, a waiter carries it to the kitchen, and the kitchen prepares a meal. The waiter brings the result back to the customer. An API plays a similar communication role between software systems.</p>
+<h4 id="a-simple-ai-request-journey">A simple AI request journey</h4>
+<div class="code-wrap"><button aria-label="Copy code" class="copy-code" type="button">Copy</button><pre><code class="language-text">Visitor
+  │  "Please explain my report."
+  ▼
+Website or App
+  │  Prepares the request
+  ▼
+API Endpoint
+  │  Sends the request to the AI service
+  ▼
+AI Service
+  │  Processes the request
+  ▼
+API Response
+  │  Returns a result or an error
+  ▼
+Website or App
+  │  Displays the result
+  ▼
+Visitor
+</code></pre></div>
+<p><strong>Remember:</strong> An API is not the AI model itself. It is the interface through which a website or application requests a service.</p>
+<h3 id="2-what-is-an-api-request">2. What is an API request?</h3>
+<p>A <strong>request</strong> is a message one application sends to another, asking it to perform an action or return information.</p>
+<p>For example, a website might send this simplified request body:</p>
+<div class="code-wrap"><button aria-label="Copy code" class="copy-code" type="button">Copy</button><pre><code class="language-json">{
+  "model": "example-model",
+  "message": "Explain this Excel report"
+}
+</code></pre></div>
+<ul>
+<li><strong><code>model</code></strong> indicates which AI model should be used.</li>
+<li><strong><code>message</code></strong> contains the user's question or instruction.</li>
+</ul>
+<p>Real APIs also specify information such as a destination endpoint, HTTP method, headers, and sometimes an authentication credential. The example above is illustrative, not a copy-and-paste request for a particular provider.</p>
+<h4 id="what-is-an-endpoint">What is an endpoint?</h4>
+<p>An <strong>endpoint</strong> is a specific address where an API accepts requests. For example, an application might send chat requests to a path such as <code>/api/chat</code>.</p>
+<h3 id="3-what-is-an-api-response">3. What is an API response?</h3>
+<p>A <strong>response</strong> is what the service sends back after receiving a request.</p>
+<p>A simplified successful response might look like this:</p>
+<div class="code-wrap"><button aria-label="Copy code" class="copy-code" type="button">Copy</button><pre><code class="language-json">{
+  "answer": "Your sales increased this month."
+}
+</code></pre></div>
+<p>A response may also include a status code, error details, or other metadata. An HTTP success response means the technical request succeeded; it does <strong>not</strong> guarantee that an AI-generated answer is factually correct.</p>
+<h3 id="4-what-is-an-api-key">4. What is an API key?</h3>
+<p>An <strong>API key</strong> is a credential used to identify or authenticate access to a service, depending on how the provider implements it.</p>
+<p>You can think of it as an access pass. If a required credential is missing, invalid, or no longer valid, a request may be rejected.</p>
+<blockquote>
+<p><strong>Security note:</strong> Never place real API keys in public repositories, screenshots, client-side code, support tickets, or shared logs. Use your application's secure secret-management method.</p>
+</blockquote>
+
+</details>
+<details class="lab-learning"><summary>Phase 2 — Investigate with Logs</summary>
+<h3 id="5-what-are-logs">5. What are logs?</h3>
+<p><strong>Logs</strong> are records of events that happen inside a software system. They help support teams reconstruct what happened and when.</p>
+<p>For example:</p>
+<div class="code-wrap"><button aria-label="Copy code" class="copy-code" type="button">Copy</button><pre><code class="language-text">10:30:01  Request received
+10:30:02  Connecting to AI service
+10:30:03  HTTP 401 Unauthorized
+10:30:03  Request failed
+</code></pre></div>
+<p>This tells us that a request reached the application, an AI service was contacted, and the service rejected the request with an authentication-related status. It does not, by itself, prove exactly which credential or configuration is responsible.</p>
+<h3 id="6-common-http-status-codes">6. Common HTTP status codes</h3>
+<p>An <strong>HTTP status code</strong> helps describe the outcome of a web request. These are useful starting points for investigation, not complete diagnoses.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Meaning</th>
+<th>Possible cause</th>
+<th>First investigation step</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>200 — OK</strong></td>
+<td>The HTTP request succeeded</td>
+<td>Normal service response</td>
+<td>Check the response content and whether it meets the user's need</td>
+</tr>
+<tr>
+<td><strong>400 — Bad Request</strong></td>
+<td>The server could not process the request as sent</td>
+<td>Invalid JSON, missing field, unsupported parameter</td>
+<td>Compare the request with the API documentation</td>
+</tr>
+<tr>
+<td><strong>401 — Unauthorized</strong></td>
+<td>Required authentication was not accepted</td>
+<td>Missing, expired, or invalid credential</td>
+<td>Check authentication configuration securely</td>
+</tr>
+<tr>
+<td><strong>403 — Forbidden</strong></td>
+<td>The request is not permitted</td>
+<td>Insufficient roles or permissions</td>
+<td>Review authorized account permissions</td>
+</tr>
+<tr>
+<td><strong>404 — Not Found</strong></td>
+<td>The requested endpoint or resource was not found</td>
+<td>Incorrect URL or resource identifier</td>
+<td>Verify the endpoint and identifier</td>
+</tr>
+<tr>
+<td><strong>429 — Too Many Requests</strong></td>
+<td>A request limit has been reached</td>
+<td>Rate limits or quotas</td>
+<td>Review usage, limits, and retry guidance</td>
+</tr>
+<tr>
+<td><strong>500 — Internal Server Error</strong></td>
+<td>The server encountered an unexpected error</td>
+<td>Backend failure</td>
+<td>Collect request details and check service health</td>
+</tr>
+<tr>
+<td><strong>503 — Service Unavailable</strong></td>
+<td>The service is temporarily unable to handle the request</td>
+<td>Maintenance, overload, or service incident</td>
+<td>Check service status and recommended retry behavior</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="example-understanding-a-401-error">Example: Understanding a 401 error</h4>
+<div class="code-wrap"><button aria-label="Copy code" class="copy-code" type="button">Copy</button><pre><code class="language-text">10:30:01  Chat request sent
+10:30:02  HTTP 401 Unauthorized
+10:30:02  Message: Invalid API key
+</code></pre></div>
+<p><strong>What we know:</strong> The request failed during authentication.<br/>
+<strong>What we investigate:</strong> Whether the application is using the correct credential and authorization settings.<br/>
+<strong>What we avoid:</strong> Sharing the secret key or declaring the root cause confirmed before checking it.</p>
+<h3 id="7-what-information-should-you-look-for-in-logs">7. What information should you look for in logs?</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Log field</th>
+<th>What it tells you</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Timestamp</strong></td>
+<td>When an event happened</td>
+</tr>
+<tr>
+<td><strong>Request ID</strong></td>
+<td>Which specific request to trace across systems</td>
+</tr>
+<tr>
+<td><strong>Status code</strong></td>
+<td>Whether the request succeeded or how it failed</td>
+</tr>
+<tr>
+<td><strong>Error message</strong></td>
+<td>What the service reported</td>
+</tr>
+<tr>
+<td><strong>Duration / latency</strong></td>
+<td>How long the request took</td>
+</tr>
+<tr>
+<td><strong>Endpoint</strong></td>
+<td>Which API operation was called</td>
+</tr>
+<tr>
+<td><strong>Retry count</strong></td>
+<td>How many times the operation was attempted again</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="example-log">Example log</h4>
+<div class="code-wrap"><button aria-label="Copy code" class="copy-code" type="button">Copy</button><pre><code class="language-text">Time:       10:30:02
+Request ID: req-4721
+Endpoint:   /api/chat
+Status:     429
+Duration:   85 ms
+Message:    Rate limit exceeded
+</code></pre></div>
+<p>A useful initial support summary would be:</p>
+<blockquote>
+<p>“The chat request was rejected with an HTTP 429 rate-limit response at 10:30. The request ID is <code>req-4721</code>. We should review account limits, recent request volume, and recommended retry behavior.”</p>
+</blockquote>
+<p>This is more helpful than saying only, “The AI is broken.”</p>
+
+</details>
+<details class="lab-learning"><summary>Phase 3 — Troubleshoot and Communicate</summary>
+<h3 id="8-step-1-understand-the-customer-s-problem">8. Step 1 — Understand the customer's problem</h3>
+<p>Suppose a customer says:</p>
+<blockquote>
+<p>“My AI assistant is not responding.”</p>
+</blockquote>
+<p>Start by asking focused questions:</p>
+<ul>
+<li>When did the problem begin?</li>
+<li>Does it affect one user or several users?</li>
+<li>What message appears on screen?</li>
+<li>Was the same feature working before?</li>
+<li>Did any settings or permissions recently change?</li>
+</ul>
+<p><strong>Goal:</strong> Define the impact and scope before looking for a solution.</p>
+<h3 id="9-step-2-reproduce-the-issue">9. Step 2 — Reproduce the issue</h3>
+<p><strong>Reproducing</strong> means safely trying to observe the same problem again in an approved testing environment.</p>
+<p>For example, if a customer reports that a file upload fails, try uploading a safe sample file using a test account with appropriate permissions.</p>
+<ul>
+<li>If the same issue appears, you have a repeatable test case.</li>
+<li>If it does not appear, investigate differences in account settings, file type, size, permissions, or browser environment.</li>
+</ul>
+<p><strong>Goal:</strong> Turn a general complaint into something you can observe and describe.</p>
+<blockquote>
+<p><strong>Privacy note:</strong> Do not reuse sensitive customer files or private data without authorization. Use test data whenever possible.</p>
+</blockquote>
+<h3 id="10-step-3-inspect-relevant-logs">10. Step 3 — Inspect relevant logs</h3>
+<p>Suppose the log shows:</p>
+<div class="code-wrap"><button aria-label="Copy code" class="copy-code" type="button">Copy</button><pre><code class="language-text">Upload started
+File validation completed
+HTTP 413 Content Too Large
+Upload rejected
+</code></pre></div>
+<p><strong>HTTP 413</strong> indicates that the request content exceeds a limit set by the server or another component handling the request.</p>
+<p>The useful next step is to check the application's upload limits and the file's size, rather than changing unrelated settings.</p>
+<p><strong>Goal:</strong> Use evidence to narrow the investigation.</p>
+<h3 id="11-step-4-identify-the-likely-cause">11. Step 4 — Identify the likely cause</h3>
+<p>Connect the customer's experience with the available evidence.</p>
+<ul>
+<li><strong>401:</strong> Investigate authentication and credentials.</li>
+<li><strong>403:</strong> Investigate account permissions.</li>
+<li><strong>429:</strong> Investigate rate limits and usage.</li>
+<li><strong>503:</strong> Investigate service availability.</li>
+</ul>
+<p>Avoid claiming certainty without enough evidence.</p>
+<p><strong>Good professional wording:</strong></p>
+<blockquote>
+<p>“The current evidence suggests that requests may be reaching a rate limit. We are checking account usage and service settings before confirming the cause.”</p>
+</blockquote>
+<p><strong>Goal:</strong> Separate a probable explanation from a verified root cause.</p>
+<h3 id="12-step-5-escalate-with-useful-evidence">12. Step 5 — Escalate with useful evidence</h3>
+<p><strong>Escalation</strong> means handing an issue to another person or team with the access or expertise needed to resolve it.</p>
+<p>Instead of writing “AI does not work,” provide a structured ticket.</p>
+<h4 id="example-technical-support-ticket">Example technical support ticket</h4>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Issue</strong></td>
+<td>AI chat requests fail</td>
+</tr>
+<tr>
+<td><strong>Impact</strong></td>
+<td>One customer account affected</td>
+</tr>
+<tr>
+<td><strong>First observed</strong></td>
+<td>10:30 AM</td>
+</tr>
+<tr>
+<td><strong>Error</strong></td>
+<td>HTTP 429</td>
+</tr>
+<tr>
+<td><strong>Request ID</strong></td>
+<td><code>req-4721</code></td>
+</tr>
+<tr>
+<td><strong>Reproduction</strong></td>
+<td>Three authorized test requests returned the same response</td>
+</tr>
+<tr>
+<td><strong>Initial finding</strong></td>
+<td>Possible account-level rate limit</td>
+</tr>
+<tr>
+<td><strong>Requested help</strong></td>
+<td>Verify quota settings and rate-limit events</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Goal:</strong> Help the technical team continue the investigation without starting again from zero.</p>
+<h3 id="13-step-6-communicate-clearly-with-the-customer">13. Step 6 — Communicate clearly with the customer</h3>
+<p>The customer does not need every technical detail. They need to know what is happening and what the next step will be.</p>
+<h4 id="example-customer-update">Example customer update</h4>
+<blockquote>
+<p>“We found that your requests are being limited by the service. Our technical team is reviewing the account settings. We will share another update once we have confirmed the cause and the appropriate next steps.”</p>
+</blockquote>
+<p>Good communication should be:</p>
+<ul>
+<li><strong>Clear:</strong> Avoid unnecessary technical jargon.</li>
+<li><strong>Accurate:</strong> State what is known and what remains under investigation.</li>
+<li><strong>Calm:</strong> Explain the process without creating unnecessary concern.</li>
+<li><strong>Responsible:</strong> Do not promise a fix or resolution time that has not been confirmed.</li>
+</ul>
+<p><strong>Goal:</strong> Build trust while the technical investigation continues.</p>
+
+</details>

@@ -1,5 +1,5 @@
 {
-  "pages": 213,
+  "pages": 214,
   "routes": [
     "/",
     "/learn/",
@@ -212,6 +212,7 @@
     "/quick-review/m08/l10/",
     "/quick-review/m08/l11/",
     "/quick-review/m08/l12/",
+    "/support-lab/",
     "/about/",
     "/privacy/"
   ]

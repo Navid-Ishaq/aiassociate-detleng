@@ -49,3 +49,7 @@ The supplied curriculum DOCX was independently checked again: all 96 lesson ID/t
 ## Speaking Practice: M01-L01
 
 Companion learning content transcribed from `D:/Web-Sites-Workings/AIAssociate-DeTLeng-Notes/Simulations/M01/M01-L01-simulations..docx`: 18 simulations, 72 points and 18 professional responses. Implementation brief was treated as supporting requirements; editorial commentary and internal draft labels are excluded from learner output. Questions remain sourced from src/reviews/M01-L01.json. See SIMULATION_AUTHORING_GUIDE.md.
+
+## AI Support Lab
+
+Adapted from the user-supplied `C:/Users/mnvid/Downloads/ai-support-lab.html`. The three API/log/support teaching phases and eight support-skill topics are retained under src/support-lab/. Activity choices, feedback, ticket fields, progress semantics, reset behaviour, and a complete fictional 503/model-not-found support case were revised for the agreed independent learning workspace. See AI_SUPPORT_LAB_AUTHORING_GUIDE.md.

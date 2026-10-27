@@ -11,7 +11,7 @@ export function createServer(){return http.createServer(async(req,res)=>{
   const qaRoot=path.resolve(root,'tests/qa');
   const servingQA=process.env.SITE_QA==='1'&&pathname.startsWith('/__qa/');
   // Local preview exposes website routes, not repository metadata or source.
-  const publicPath=/^\/(?:$|index\.html$|404\.html$|CNAME$|robots\.txt$|sitemap\.xml$|route-manifest\.json$|assets\/|learn(?:\/|$)|quick-review(?:\/|$)|about(?:\/|$)|privacy(?:\/|$))/;
+  const publicPath=/^\/(?:$|index\.html$|404\.html$|CNAME$|robots\.txt$|sitemap\.xml$|route-manifest\.json$|assets\/|learn(?:\/|$)|quick-review(?:\/|$)|support-lab(?:\/|$)|about(?:\/|$)|privacy(?:\/|$))/;
   if(!servingQA&&!publicPath.test(pathname)){const data=await readFile(path.join(root,'404.html'));res.writeHead(404,{'Content-Type':mime['.html']});return res.end(req.method==='HEAD'?undefined:data);}
   const allowedRoot=servingQA?qaRoot:root;
   let file=path.resolve(allowedRoot,'.'+(servingQA?pathname.slice(5):pathname));

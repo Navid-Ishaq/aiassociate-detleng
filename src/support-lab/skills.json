@@ -1,0 +1,178 @@
+[
+  {
+    "title": "APIs",
+    "goal": "Explain how applications exchange requests and responses.",
+    "meaning": "An API is a defined way for one application to ask another application to do something or return information. It is the connection contract—not the AI model itself.",
+    "work": "A customer sends a chat message from an app. The app calls an AI API and displays the reply. If the call fails, you trace where the request stopped.",
+    "look": "Request destination, method, response status, request ID and whether the request reached the intended service.",
+    "mistake": "Assuming an API always means AI, or assuming HTTP 200 means the AI answer is factually correct.",
+    "example": "User → Web app → POST /api/chat → AI service\nAI service → Response → Web app → User",
+    "q": "What is the API's primary role here?",
+    "options": [
+      "To generate the model response inside the browser",
+      "To define how systems exchange requests and responses",
+      "To store every customer conversation"
+    ],
+    "correct": 1,
+    "why": "An API defines how software communicates. It does not guarantee an AI answer's correctness.",
+    "optionReasons": [
+      "The model produces the response; the API defines the communication contract.",
+      "An API defines how software communicates. It does not guarantee an AI answer's correctness.",
+      "Conversation storage is an application decision, not the API’s primary role."
+    ]
+  },
+  {
+    "title": "JSON",
+    "goal": "Read structured information and identify fields that matter.",
+    "meaning": "JSON is a text format that stores data as named fields and values. Curly braces hold objects, while square brackets hold lists.",
+    "work": "A support request returns an error object. You locate fields such as status, message and request_id without confusing them with sensitive authentication details.",
+    "look": "Field names, their values, nesting, missing required fields and unexpected data types.",
+    "mistake": "Confusing the text name of a field with the value it contains, or pasting secret tokens into a support ticket.",
+    "example": "{\n  \"status\": 429,\n  \"message\": \"Rate limit exceeded\",\n  \"request_id\": \"req-demo-4721\"\n}",
+    "q": "Which field can help engineering trace this example request?",
+    "options": [
+      "request_id",
+      "status without its associated request",
+      "the visible wording alone"
+    ],
+    "correct": 0,
+    "why": "The request_id identifies the specific request to investigate. Keep the sample ID fictional in public practice.",
+    "optionReasons": [
+      "The request_id identifies the specific request to investigate. Keep the sample ID fictional in public practice.",
+      "A status describes the outcome but does not uniquely trace this request.",
+      "Wording alone does not identify the request across components."
+    ]
+  },
+  {
+    "title": "HTTP",
+    "goal": "Recognize response code categories and select useful next checks.",
+    "meaning": "HTTP is the protocol commonly used for web requests. Status codes indicate the type of result: 2xx success, 4xx request-side issues, and 5xx server-side failures.",
+    "work": "An AI customer sees HTTP 429. You investigate rate limits and request volume before recommending a retry strategy.",
+    "look": "Exact status code, provider error text, retry guidance, and whether the error repeats across accounts.",
+    "mistake": "Treating a status code as conclusive proof of one exact root cause.",
+    "example": "HTTP/1.1 429 Too Many Requests\nRetry-After: 30\n{\"message\":\"Rate limit exceeded\"}",
+    "q": "What should you investigate first for HTTP 429?",
+    "options": [
+      "Increase retries immediately to restore the service",
+      "Check volume, limits and Retry-After guidance",
+      "Replace the API key before checking usage"
+    ],
+    "correct": 1,
+    "why": "429 usually indicates rate limiting. Check usage, limits and any Retry-After response guidance.",
+    "optionReasons": [
+      "Immediate repeated retries can worsen rate limiting.",
+      "429 usually indicates rate limiting. Check usage, limits and any Retry-After response guidance.",
+      "The log does not provide evidence of rejected authentication."
+    ]
+  },
+  {
+    "title": "Logs",
+    "goal": "Find timestamps, request IDs, status codes and error messages.",
+    "meaning": "Logs are records of software events. They help reconstruct what happened, when it happened, and which component reported the event.",
+    "work": "A customer says chat stopped at 10:30. You correlate a timestamp and request ID with relevant errors.",
+    "look": "Time and timezone, request ID, status code, error message, environment and event sequence.",
+    "mistake": "Reading one log line without context, or sharing raw logs containing sensitive personal information.",
+    "example": "10:30:01 request received  id=req-demo-88\n10:30:02 model call started id=req-demo-88\n10:30:03 HTTP 503         id=req-demo-88",
+    "q": "Why is a request ID useful?",
+    "options": [
+      "It confirms all events have the same cause",
+      "It helps correlate events from the same request",
+      "It proves the user saw the returned response"
+    ],
+    "correct": 1,
+    "why": "Request IDs help correlate records across services. They are evidence, not a fix.",
+    "optionReasons": [
+      "Correlation does not establish a shared root cause.",
+      "Request IDs help correlate records across services. They are evidence, not a fix.",
+      "A request ID does not prove the client displayed the response."
+    ]
+  },
+  {
+    "title": "Troubleshooting",
+    "goal": "Investigate issues methodically instead of guessing.",
+    "meaning": "Troubleshooting means describing a problem, gathering evidence, testing explanations and deciding the safest next action.",
+    "work": "An AI assistant fails for one account. You reproduce the issue with a safe test, compare other accounts, examine logs and narrow possible causes.",
+    "look": "Who is affected, first observed time, recent changes, reproduction steps, logs and what has already been tried.",
+    "mistake": "Changing many settings at once, or declaring a root cause before the evidence supports it.",
+    "example": "1. Understand → 2. Reproduce → 3. Inspect\n4. Investigate → 5. Escalate → 6. Communicate",
+    "q": "What should happen before deciding the root cause?",
+    "options": [
+      "Gather evidence and compare possible explanations",
+      "Change several settings to see what works",
+      "Confirm a cause from the first error line"
+    ],
+    "correct": 0,
+    "why": "Good troubleshooting starts with evidence. A plausible guess is not yet a confirmed diagnosis.",
+    "optionReasons": [
+      "Good troubleshooting starts with evidence. A plausible guess is not yet a confirmed diagnosis.",
+      "Several changes at once make it harder to identify which one mattered.",
+      "A first error line needs context before it becomes a confirmed diagnosis."
+    ]
+  },
+  {
+    "title": "Support tickets",
+    "goal": "Write clear handovers that help technical colleagues act.",
+    "meaning": "A support ticket is a structured record of a reported issue, its impact, the evidence collected and the assistance needed.",
+    "work": "You send engineering a ticket with issue scope, exact error, timestamps, reproduction steps and a clear investigation request.",
+    "look": "Summary, impact, environment, reproduction steps, expected versus actual result, request ID, and next action.",
+    "mistake": "Writing only 'AI broken' or adding unsupported conclusions as facts.",
+    "example": "Summary: Chat requests fail\nImpact: One test account\nStatus: HTTP 429\nRequest ID: req-demo-4721\nNext step: Verify the account's rate limits",
+    "q": "Which ticket is most helpful to an engineer?",
+    "options": [
+      "Chat is failing; the backend must be broken",
+      "The model is unavailable; no evidence collected yet",
+      "One test account gets HTTP 429; time and request ID attached"
+    ],
+    "correct": 2,
+    "why": "Specific scope and verifiable evidence make a ticket actionable.",
+    "optionReasons": [
+      "This assumes a backend cause without supporting evidence.",
+      "This declares a model cause without documenting what was observed.",
+      "Specific scope and verifiable evidence make a ticket actionable."
+    ]
+  },
+  {
+    "title": "AI model behavior",
+    "goal": "Recognize hallucinations, limitations and unexpected outputs.",
+    "meaning": "AI models can produce fluent answers that are incomplete, incorrect or inconsistent. Hallucination means generated information that is not grounded in reliable evidence.",
+    "work": "An AI assistant invents an account feature. You compare its answer with the approved documentation and reproduce the prompt before escalating.",
+    "look": "Model and version, relevant prompt context, source evidence, reproducibility, safety boundaries and expected output.",
+    "mistake": "Assuming a confident answer is always true, or exposing sensitive customer data to an unapproved model.",
+    "example": "Customer: Does this plan support feature X?\nAI: Yes, always.\nDocumentation: Feature X is not listed.\nAction: Verify against an authoritative source.",
+    "q": "What is a responsible response to a confident but unsupported AI answer?",
+    "options": [
+      "Use it if two generations agree",
+      "Compare the claim with an authoritative source",
+      "Change the wording before sharing the claim"
+    ],
+    "correct": 1,
+    "why": "Confidence is not accuracy. Verify important claims against trusted documentation or data.",
+    "optionReasons": [
+      "Repeated agreement is not independent evidence.",
+      "Confidence is not accuracy. Verify important claims against trusted documentation or data.",
+      "Rewording a claim does not verify its accuracy."
+    ]
+  },
+  {
+    "title": "Customer communication",
+    "goal": "Give accurate, calm and professional updates.",
+    "meaning": "Good customer communication acknowledges the issue, separates facts from assumptions and explains the next step without making unsupported promises.",
+    "work": "A customer asks if the outage is fixed. You report what is confirmed and explain how the investigation will continue.",
+    "look": "Clear acknowledgement, verified facts, a realistic next action, ownership and respectful wording.",
+    "mistake": "Promising a fix or deadline without confirmation, or overwhelming the customer with internal jargon.",
+    "example": "Thank you for reporting this. We have confirmed failed requests and are investigating the cause. We will share the next update when we have verified the next steps.",
+    "q": "Which update is most professional?",
+    "options": [
+      "The provider is responsible; we expect it fixed shortly",
+      "We are reviewing failed requests and will share confirmed findings",
+      "Please retry repeatedly while we investigate"
+    ],
+    "correct": 1,
+    "why": "The best update shares verified observations, explains the next step and avoids false promises.",
+    "optionReasons": [
+      "The cause and expected fix are not established.",
+      "The best update shares verified observations, explains the next step and avoids false promises.",
+      "Uncontrolled repeated retries can duplicate work or increase load."
+    ]
+  }
+]

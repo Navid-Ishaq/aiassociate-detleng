@@ -50,7 +50,7 @@ test('all internal links, asset references, and fragment targets resolve in gene
   }
  }
 });
-test('all 213 direct routes return 200; no-slash lesson URLs redirect to working pages',async()=>{
+test('all generated direct routes return 200; no-slash lesson URLs redirect to working pages',async()=>{
  for(let i=0;i<built.routes.length;i+=12){await Promise.all(built.routes.slice(i,i+12).map(async r=>{const response=await fetch(base+r);assert.equal(response.status,200,r);assert.match(response.headers.get('content-type'),/text\/html/);}));}
  const response=await fetch(base+'/learn/m03/l10',{redirect:'manual'});assert.equal(response.status,301);assert.equal(response.headers.get('location'),'/learn/m03/l10/');
  const lesson=await fetch(base+'/learn/m03/l10');assert.match(await lesson.text(),/HTTP 429 and Rate Limits/);
@@ -87,7 +87,7 @@ test('sitemap, CNAME, and production output agree with the configured hostname',
  const {site}=await import('../src/config.mjs');
  assert.equal((await readFile(path.join(built.out,'CNAME'),'utf8')).trim(),new URL(site.origin).hostname);
  const sitemap=await readFile(path.join(built.out,'sitemap.xml'),'utf8');
- assert.equal((sitemap.match(/<loc>/g)||[]).length,213);assert.ok(!sitemap.includes('404.html'));
+ assert.equal((sitemap.match(/<loc>/g)||[]).length,built.routes.length);assert.ok(!sitemap.includes('404.html'));
 });
 
 
@@ -255,7 +255,7 @@ test('Quick Review escapes HTML-like source text and preserves it in its inert J
 });
 
 test('shared AI Guide shell is present on every page and all Quick Review cards hand over stable context IDs',async()=>{
- for(const [route,html]of pages){for(const marker of ['id="guide-launcher"','id="guide-panel"','id="guide-conversation"','id="guide-message"','id="guide-send"','Privacy details','Online AI is not connected. No messages are sent to an AI provider.'])assert.ok(html.includes(marker),route+': '+marker);}
+ for(const [route,html]of pages){if(route==='/support-lab/')continue;for(const marker of ['id="guide-launcher"','id="guide-panel"','id="guide-conversation"','id="guide-message"','id="guide-send"','Privacy details','Online AI is not connected. No messages are sent to an AI provider.'])assert.ok(html.includes(marker),route+': '+marker);}
  const review=pages.get('/quick-review/m01/l01/');assert.equal((review.match(/data-guide-review="/g)||[]).length,18);assert.ok(review.includes('data-guide-lesson="M01-L01" data-guide-review="M01-L01-R002"'));
  const catalog=JSON.parse(await readFile(path.join(root,'assets/guide-catalog.json'),'utf8'));assert.equal(catalog.lessons.length,96);assert.equal(catalog.lessons.filter(l=>l.status==='published').length,1);assert.equal(catalog.lessons.filter(l=>l.reviewStatus==='published').length,1);
  for(const asset of ['guide.js','guide-protocol.js','guide.css','guide-config.json','guide-catalog.json'])assert.equal((await fetch(base+'/assets/'+asset)).status,200);
@@ -267,4 +267,13 @@ test('Speaking Practice is published only for mapped questions and lazily loads 
  for(const name of ['simulation.js','simulation.css','simulation-content.js','simulations/M01-L01.json'])assert.equal((await fetch(base+'/assets/'+name)).status,200);
  const js=await readFile(path.join(root,'assets/simulation.js'),'utf8');assert.ok(!/groq|guide-api|speechSynthesis|getUserMedia|localStorage/.test(js));
  const bank=JSON.parse(await readFile(path.join(root,'assets/simulations/M01-L01.json'),'utf8'));assert.equal(bank.items.length,18);
+});
+
+test('AI Support Lab has a working independent route and navigation after Quick Review',async()=>{
+ const html=pages.get('/support-lab/');assert.ok(html);assert.equal((await fetch(base+'/support-lab/')).status,200);assert.equal((await fetch(base+'/support-lab',{redirect:'manual'})).status,301);
+ assert.ok(!html.includes('id="guide-panel"'));assert.ok(!html.includes('assets/guide.js'));assert.ok(!html.includes('&lt;details&gt;'));assert.equal((html.match(/<h1(?: |>)/g)||[]).length,1);
+ for(const [,page]of pages){assert.ok(page.includes('href="/support-lab/"'));assert.ok(page.indexOf('>Quick Review</a>')<page.indexOf('>AI Support Lab</a>'));}
+ assert.ok(html.includes('id="lab-panel-case"'));assert.ok(html.includes('model_not_found'));assert.ok(html.includes('No request is sent to a provider or customer.'));
+ for(const asset of ['support-lab.css','support-lab.js','support-lab-logic.js'])assert.equal((await fetch(base+'/assets/'+asset)).status,200);
+ const script=await readFile(path.join(root,'assets/support-lab.js'),'utf8');assert.ok(!/fetch\(|XMLHttpRequest|sendBeacon|guide-api|groq\.com/.test(script));
 });

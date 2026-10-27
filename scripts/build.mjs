@@ -1,3 +1,4 @@
+import {supportLab} from '../src/support-lab/render.mjs';
 import {validateSimulations} from '../src/simulation-system/content.js';
 import {readFile,writeFile,mkdir,copyFile} from 'node:fs/promises';
 import path from 'node:path';
@@ -74,9 +75,11 @@ export async function build(){
    await page(reviewLessonPath(l),{title:`Quick Review: ${l.title}`,description:`${l.id}: ${l.objective}${reviewBanks.has(l.id)?' Short questions, clear answers and optional listening practice.':' This Quick Review is coming soon.'}`,content:reviewLesson(m,s,l,reviewBanks.get(l.id),simulationBanks.get(l.id)),active:'review'});
   }
  }
+ await page('/support-lab/',{title:'AI Support Lab',description:'Practise APIs, log investigation, troubleshooting, support tickets and customer updates in an independent learning workspace.',content:supportLab(await readFile(path.join(root,'src/support-lab/learning.html'),'utf8'),await readJSON(path.join(root,'src/support-lab/skills.json'))),active:'lab',guide:false});
  await page('/about/',{title:'About the learning journey',content:about(),active:'about'});
  await page('/privacy/',{title:'Privacy',content:privacy()});
  await page('/404.html',{title:'Page not found',content:notFound(),noindex:true});
+ for(const [file,target]of [['styles.css','support-lab.css'],['runtime.js','support-lab.js'],['logic.js','support-lab-logic.js']])await copyFile(path.join(root,'src/support-lab',file),path.join(out,'assets',target));
  await copyFile(path.join(root,'src/lesson-system/styles.css'),path.join(out,'assets/lesson.css'));
  await copyFile(path.join(root,'src/lesson-system/runtime.js'),path.join(out,'assets/lesson.js'));
  await copyFile(path.join(root,'src/styles.css'),path.join(out,'assets/styles.css'));
