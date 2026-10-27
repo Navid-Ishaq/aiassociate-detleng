@@ -2,10 +2,11 @@ export const reviewLanguages = [
  ['de','German'],['es','Spanish'],['fr','French'],['ur','Urdu'],['ar','Arabic'],['hi','Hindi'],['pt','Portuguese'],['it','Italian'],['zh-CN','Chinese (Simplified)'],['ja','Japanese'],['ko','Korean'],['ru','Russian'],['bn','Bengali']
 ];
 export const MAX_REPEATS=20;
-export function prepareListener(item,language,repeats){
+export function prepareListener(item,language,repeats){return prepareTextListener(`Customer: ${item.question}\nYour response: ${item.answer}`,language,repeats);}
+export function prepareTextListener(baseText,language,repeats){
+ if(typeof baseText!=='string'||!baseText.trim())throw new Error('Choose some practice text first.');
  if(!reviewLanguages.some(([code])=>code===language))throw new Error('Choose a supported target language.');
  if(!Number.isInteger(repeats)||repeats<1||repeats>MAX_REPEATS)throw new Error(`Choose a whole number from 1 to ${MAX_REPEATS}.`);
- const baseText=`Customer: ${item.question}\nYour response: ${item.answer}`;
  const text=Array(repeats).fill(baseText).join('\n\n');
  const url=new URL('https://translate.google.com/');
  url.search=new URLSearchParams({sl:'en',tl:language,text,op:'translate'}).toString();

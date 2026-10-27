@@ -45,3 +45,7 @@ The latest user direction supersedes the original green/off-white palette and ca
 ## Quick Review integration — 26 October 2026
 
 The supplied curriculum DOCX was independently checked again: all 96 lesson ID/title/objective records match the existing shared curriculum data. The latest user request authorizes the Quick Review navigation hierarchy and Coming Soon pages only. No customer Q&A banks or full lesson content were authored, invented, or activated. Review module names, focus descriptions, section names, lesson IDs, exact titles, and objectives come from the same authoritative curriculum.
+
+## Speaking Practice: M01-L01
+
+Companion learning content transcribed from `D:/Web-Sites-Workings/AIAssociate-DeTLeng-Notes/Simulations/M01/M01-L01-simulations..docx`: 18 simulations, 72 points and 18 professional responses. Implementation brief was treated as supporting requirements; editorial commentary and internal draft labels are excluded from learner output. Questions remain sourced from src/reviews/M01-L01.json. See SIMULATION_AUTHORING_GUIDE.md.

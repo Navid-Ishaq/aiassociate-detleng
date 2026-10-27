@@ -61,8 +61,8 @@ export function reviewModule(m, modules) {
   </div>`;
 }
 
-export function reviewLesson(m, s, l, bank) {
-  if(bank)return publishedReview(m,s,l,bank);
+export function reviewLesson(m, s, l, bank, simulations=null) {
+  if(bank)return publishedReview(m,s,l,bank,simulations);
   const lessons = m.sections.flatMap(section => section.lessons), i = lessons.indexOf(l);
   return `<div class="container lesson-page">
     ${breadcrumbs([['Quick Review', '/quick-review/'], [m.title, reviewModulePath(m)], [s.title, reviewModulePath(m) + '#section-' + s.id.toLowerCase()], [l.title]])}

@@ -9,7 +9,7 @@ export function learningContext(context,message){
  if(!context.selectedReview&&context.review)result.reviewExamples=context.review.items.slice(0,3);
  return result;
 }
-export function createGroqGenerator({apiKey,model='llama-3.3-70b-versatile',fetchImpl=fetch,maxDailyRequests=200,maxConcurrent=2}={}){
+export function createGroqGenerator({apiKey,model='openai/gpt-oss-20b',fetchImpl=fetch,maxDailyRequests=200,maxConcurrent=2}={}){
  if(!apiKey?.trim())return null;
  let active=0,count=0,day='';
  return async({message,history,context})=>{

@@ -33,6 +33,6 @@ if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.ur
  const allowedOrigins=(process.env.ALLOWED_ORIGINS||'http://127.0.0.1:4173,http://localhost:4173,https://www.aiassociate.detleng.com').split(',').map(s=>s.trim()).filter(Boolean);
  const maxDailyRequests=Number(process.env.GUIDE_DAILY_REQUEST_LIMIT||200),maxConcurrent=Number(process.env.GUIDE_MAX_CONCURRENT||2);
  if(!Number.isInteger(maxDailyRequests)||maxDailyRequests<1||!Number.isInteger(maxConcurrent)||maxConcurrent<1)throw Error('Invalid Guide limits');
- const generate=process.env.GUIDE_ENABLED==='true'?createGroqGenerator({apiKey:process.env.GROQ_API_KEY,model:process.env.GROQ_MODEL||'llama-3.3-70b-versatile',maxDailyRequests,maxConcurrent}):null;
+ const generate=process.env.GUIDE_ENABLED==='true'?createGroqGenerator({apiKey:process.env.GROQ_API_KEY,model:process.env.GROQ_MODEL||'openai/gpt-oss-20b',maxDailyRequests,maxConcurrent}):null;
  createGuideServer({generate,allowedOrigins}).listen(port,host,()=>console.log(`Guide listening on ${host}:${port}; provider ${generate?'configured':'disabled'}`));
 }

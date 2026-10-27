@@ -261,3 +261,10 @@ test('shared AI Guide shell is present on every page and all Quick Review cards 
  for(const asset of ['guide.js','guide-protocol.js','guide.css','guide-config.json','guide-catalog.json'])assert.equal((await fetch(base+'/assets/'+asset)).status,200);
  for(const privatePath of ['/guide-server/server.mjs','/guide-server/GUIDE_INSTRUCTIONS.md','/.env'])assert.equal((await fetch(base+privatePath)).status,404);
 });
+
+test('Speaking Practice is published only for mapped questions and lazily loads one independent bank',async()=>{
+ const html=pages.get('/quick-review/m01/l01/');assert.equal((html.match(/data-speaking-review=/g)||[]).length,18);assert.ok(html.includes('data-simulation-bank="/assets/simulations/M01-L01.json"'));assert.ok(!html.includes('These models learn patterns from large collections'));assert.ok(html.includes('id="simulation-dialog"'));assert.ok(!pages.get('/quick-review/m01/l02/').includes('data-speaking-review'));
+ for(const name of ['simulation.js','simulation.css','simulation-content.js','simulations/M01-L01.json'])assert.equal((await fetch(base+'/assets/'+name)).status,200);
+ const js=await readFile(path.join(root,'assets/simulation.js'),'utf8');assert.ok(!/groq|guide-api|speechSynthesis|getUserMedia|localStorage/.test(js));
+ const bank=JSON.parse(await readFile(path.join(root,'assets/simulations/M01-L01.json'),'utf8'));assert.equal(bank.items.length,18);
+});

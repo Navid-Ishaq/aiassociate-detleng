@@ -23,7 +23,7 @@ NODE_ENV=production
 HOST=0.0.0.0
 GUIDE_ENABLED=true
 GROQ_API_KEY=PASTE_YOUR_GROQ_KEY_IN_RENDER_ONLY
-GROQ_MODEL=llama-3.3-70b-versatile
+GROQ_MODEL=openai/gpt-oss-20b
 ALLOWED_ORIGINS=https://www.aiassociate.detleng.com,http://www.aiassociate.detleng.com
 GUIDE_DAILY_REQUEST_LIMIT=200
 GUIDE_MAX_CONCURRENT=2
@@ -38,3 +38,7 @@ After the service is verified, set enabled:true and apiBase to the actual HTTPS 
 The adapter sends the selected question/answer, lesson metadata, up to three relevant source sections or curriculum outlines, recent chat and the user's message to Groq. Secrets stay on the backend. Coming Soon topics can receive general explanations. No external browsing is connected.
 
 Limits are per process: 200 attempted provider requests per UTC day, two concurrent provider requests, plus the existing per-socket request guard. Counters and deduplication reset on restart and are not a billing cap or durable global limit. CORS is not authentication. Do not trust forwarded IP headers without a verified proxy configuration. Health probes do not call Groq. This setup does not promise free unlimited AI.
+
+## Verified live configuration — 27 October 2026
+
+Service: https://aiassociate-guide.onrender.com . GROQ_MODEL is openai/gpt-oss-20b. The account model list excluded llama-3.3-70b-versatile and llama-3.1-8b-instant; both returned model_not_found. The existing API key successfully listed models and generated a reply with gpt-oss-20b. Check the account model list before changing models; a documentation page alone does not establish account availability. The live model change is already deployed through Render environment configuration and does not require a website push.

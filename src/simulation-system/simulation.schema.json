@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Speaking Practice bank",
+  "type": "object",
+  "required": [
+    "lessonId",
+    "items"
+  ],
+  "properties": {
+    "lessonId": {
+      "type": "string",
+      "pattern": "^M[0-9]{2}-L[0-9]{2}$"
+    },
+    "items": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "reviewId",
+          "goal",
+          "points",
+          "professionalResponse"
+        ],
+        "properties": {
+          "reviewId": {
+            "type": "string",
+            "pattern": "^M[0-9]{2}-L[0-9]{2}-R[0-9]{3}$"
+          },
+          "goal": {
+            "type": "string",
+            "minLength": 1
+          },
+          "professionalResponse": {
+            "type": "string",
+            "minLength": 1
+          },
+          "points": {
+            "type": "array",
+            "minItems": 4,
+            "maxItems": 4,
+            "items": {
+              "type": "object",
+              "required": [
+                "id",
+                "title",
+                "explanation",
+                "sentence"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "title": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "explanation": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sentence": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

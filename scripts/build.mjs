@@ -1,3 +1,4 @@
+import {validateSimulations} from '../src/simulation-system/content.js';
 import {readFile,writeFile,mkdir,copyFile} from 'node:fs/promises';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
@@ -35,6 +36,10 @@ export async function build(){
  const allLessons=modules.flatMap(m=>m.sections.flatMap(s=>s.lessons));
  const reviewBanks=new Map();
  for(const id of reviewIds){if(!/^M\d{2}-L\d{2}$/.test(id)||!allLessons.some(l=>l.id===id))throw Error('Unknown review lesson: '+id);reviewBanks.set(id,await readJSON(path.join(root,'src/reviews',id+'.json')));}
+ const simulationIds=await readJSON(path.join(root,'src/data/simulations.json'));
+ if(!Array.isArray(simulationIds)||new Set(simulationIds).size!==simulationIds.length)throw Error('Invalid simulation manifest');
+ const simulationBanks=new Map();
+ for(const id of simulationIds){if(!reviewBanks.has(id))throw Error('Simulation needs a published Quick Review');const bank=await readJSON(path.join(root,'src/simulations',id+'-simulations.json'));validateSimulations(bank,reviewBanks.get(id));simulationBanks.set(id,bank);}
  allLessons.forEach(l=>l.reviewStatus=reviewBanks.has(l.id)?'published':'coming-soon');
  // Root publishing: overwrite only generated files. Never recursively clean the project root.
  if(out!==root)throw new Error('Unexpected output directory');
@@ -66,7 +71,7 @@ export async function build(){
  for(const m of modules){
   await page(reviewModulePath(m),{title:`Quick Review: ${m.title}`,description:`Quick Review for ${m.title}. Explore 12 planned lesson Q&As. ${m.focus}`,content:reviewModule(m,modules),active:'review'});
   for(const s of m.sections)for(const l of s.lessons){
-   await page(reviewLessonPath(l),{title:`Quick Review: ${l.title}`,description:`${l.id}: ${l.objective}${reviewBanks.has(l.id)?' Short questions, clear answers and optional listening practice.':' This Quick Review is coming soon.'}`,content:reviewLesson(m,s,l,reviewBanks.get(l.id)),active:'review'});
+   await page(reviewLessonPath(l),{title:`Quick Review: ${l.title}`,description:`${l.id}: ${l.objective}${reviewBanks.has(l.id)?' Short questions, clear answers and optional listening practice.':' This Quick Review is coming soon.'}`,content:reviewLesson(m,s,l,reviewBanks.get(l.id),simulationBanks.get(l.id)),active:'review'});
   }
  }
  await page('/about/',{title:'About the learning journey',content:about(),active:'about'});
@@ -83,6 +88,9 @@ export async function build(){
  await copyFile(path.join(root,'src/guide-system/styles.css'),path.join(out,'assets/guide.css'));
  await mkdir(path.join(out,'assets/guide-content'),{recursive:true});
  for(const l of allLessons)if(publishedLessons.has(l.id)||reviewBanks.has(l.id))await writeFile(path.join(out,'assets/guide-content',l.id+'.json'),JSON.stringify({lessonId:l.id,title:l.title,objective:l.objective,lesson:publishedLessons.get(l.id)||null,review:reviewBanks.get(l.id)||null}));
+ await mkdir(path.join(out,'assets/simulations'),{recursive:true});
+ for(const [id,bank] of simulationBanks)await writeFile(path.join(out,'assets/simulations',id+'.json'),JSON.stringify(bank));
+ for(const [source,target]of [['styles.css','simulation.css'],['runtime.js','simulation.js'],['content.js','simulation-content.js']])await copyFile(path.join(root,'src/simulation-system',source),path.join(out,'assets',target));
  await copyFile(path.join(root,'src/review-system/styles.css'),path.join(out,'assets/review.css'));
  await copyFile(path.join(root,'src/review-system/runtime.js'),path.join(out,'assets/review.js'));
  await copyFile(path.join(root,'src/review-system/review-listener.js'),path.join(out,'assets/review-listener.js'));
